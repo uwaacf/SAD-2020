@@ -5,5 +5,4 @@
 * Make a branch for yourself that has your name in it (use `git checkout -b YOUR_NAME_HERE`)
 * Remember to set remote and upstream
 * Don't merge directly to master, make a pull request from your branch to master
-
-## Contributions
+* Check out Vue.js if you aren't familiar with it
