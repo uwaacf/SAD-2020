@@ -2,16 +2,26 @@
 <html>
 
 <head>
-    <title>WANTED</title>
+    <title>SAD</title>
     <!-- Using Vue.js - be sure to check their docs! -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/index.js"></script>
+    <script src="js/nav.js"></script>
 </head>
 
 <body>
-    <h1 id="title">{{ title }}</h1>
-    <p id="content">{{ message }}</p>
+    <ul id="navbar">
+        <a class="nav-item" v-for="item in items" v-bind:href=item.link>
+            <li>
+                {{ item.text }}
+            </li>
+        </a>
+    </ul>
+    <section id="content">
+        <h1 id="title">{{ text }}</h1>
+        <p id="info">{{ text }}</p>
+    </section>
 </body>
 
 </html>
