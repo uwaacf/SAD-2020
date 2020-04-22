@@ -5,7 +5,7 @@
         var title = new Vue({
             el: '#title',
             data: {
-                text: 'Wanted'
+                text: 'Hello'
             }
         });
         var content = new Vue({

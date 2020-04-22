@@ -9,7 +9,7 @@
                 items: [
                     { text: "Home", link: "index.html" },
                     { text: "About", link: "about.html" },
-                    { text: "Bounty Hunt", link: "bountyhunt.html" }
+                    { text: "Game", link: "bountyhunt.html" }
                 ]
             }
         });
