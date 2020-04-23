@@ -22,15 +22,12 @@
 
     function init() {
         new Vue({
-            el: '#title',
+            el: '#description',
             data: {
-                text: 'Joyce "Joyce" Li'
-            }
-        });
-        new Vue({
-            el: '#info',
-            data: {
-                text: 'Here, we will use a CFG to randomly generate an origin story for this person. The origin story will be about 100 words long, probably 6 to 8 sentences.'
+                title: 'Joyce "Joyce" Li',
+                wanted: '"updog"',
+                time: '10 years',
+                info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel bibendum diam. Aliquam lobortis, nisi sit amet consequat tempus, tortor augue egestas ex, sit amet fermentum metus lectus vel velit. Proin varius orci efficitur dui maximus, et dictum neque pharetra. Nulla facilisi. Sed vel facilisis diam, ut auctor est. Donec ullamcorper luctus nibh, ultricies consequat ligula vestibulum in. Aliquam vel enim lorem. Duis mattis odio arcu, vel vehicula velit iaculis ut. In malesuada tempus porta. Donec tincidunt accumsan felis et ultricies. Curabitur pellentesque mi id purus aliquet tempus. Pellentesque ullamcorper, odio eu posuere interdum, odio urna cursus elit, in molestie.'
             }
         });
         id('messages-img').addEventListener('click', getNotes);
