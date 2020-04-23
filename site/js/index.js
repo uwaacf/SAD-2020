@@ -2,6 +2,7 @@
     "use strict";
 
     function init() {
+        /*
         var title = new Vue({
             el: '#title',
             data: {
@@ -14,6 +15,7 @@
                 text: 'someone come up with a better title and format.'
             }
         });
+        */
     }
 
     window.addEventListener('load', init);
