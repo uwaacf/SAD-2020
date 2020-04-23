@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ name }}</title>
+    <!-- Using Vue.js - be sure to check their docs! -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/personal.css">
+    <script src="js/personal.js"></script>
+    <script src="js/nav.js"></script>
+</head>
+
+<body>
+    <ul id="navbar">
+        <a class="nav-item" v-for="item in items" v-bind:href=item.link>
+            <li>
+                {{ item.text }}
+            </li>
+        </a>
+    </ul>
+    <section id="content">
+        <img id="messages-img" src="img/pizza.jpg" alt="Joyce" />
+        <article id="description">
+            <h1 id="title">{{ title }}</h1>
+            <p>Imprisoned for: {{ crime }}</p>
+            <p>{{ info }}</p>
+        </article>
+    </section>
+    <article id="notes-view" class="hidden">
+        <img id="close" src="img/close.png" alt="close">
+        <section id="messages">
+            <div class="slideshow">
+                <div id="note">
+                    <p v-for="paragraph in paragraphs">{{ paragraph }}</p>
+                    <h1>- {{ name }}</h1>
+                </div>
+            </div>
+        </section>
+        <div id="left" class="arrow">
+            <img src="img/arrow-left.png" alt="left">
+        </div>
+        <div id="right" class="arrow">
+            <img src="img/arrow-right.png" alt="right">
+        </div>
+        <p id="pagenum">
+            {{ num }}
+        </p>
+    </article>
+</body>
+
+</html>

@@ -9,7 +9,8 @@
                 items: [
                     { text: "Home", link: "index.html" },
                     { text: "About", link: "about.html" },
-                    { text: "Game", link: "bountyhunt.html" }
+                    { text: "Game", link: "bountyhunt.html" },
+                    { text: "test", link: "personal.html?prisoner=tp" }
                 ]
             }
         });
