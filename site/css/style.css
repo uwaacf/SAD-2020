@@ -15,7 +15,7 @@ body {
     margin: 0px;
     padding: 0px;
     width: 100%;
-    background-color: #635555;
+    background-color: white;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -31,7 +31,7 @@ body {
     list-style: none;
     text-align: center;
     text-decoration: none;
-    color: #9c8b8b;
+    color: rgb(111, 111, 245);
     transition: 0.3s;
 }
 
@@ -40,7 +40,7 @@ body {
 }
 
 #navbar a:hover {
-    color: white;
+    color: rgb(22, 22, 99);
 }
 
 

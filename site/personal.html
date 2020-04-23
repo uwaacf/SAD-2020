@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Joyce</title>
+    <title>{{ name }}</title>
     <!-- Using Vue.js - be sure to check their docs! -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -23,7 +23,7 @@
         <img id="messages-img" src="img/pizza.jpg" alt="Joyce" />
         <article id="description">
             <h1 id="title">{{ title }}</h1>
-            <p id="info">Wanted for: {{ wanted }}</p>
+            <p>Imprisoned for: {{ crime }}</p>
             <p>{{ info }}</p>
         </article>
     </section>
@@ -32,7 +32,7 @@
         <section id="messages">
             <div class="slideshow">
                 <div id="note">
-                    <p>{{ message }}</p>
+                    <p v-for="paragraph in paragraphs">{{ paragraph }}</p>
                     <h1>- {{ name }}</h1>
                 </div>
             </div>
