@@ -106,7 +106,7 @@
         let response = await fetch(`resources/notes/${initials}_${name}.txt`);
         let text = await response.text();
         let lines = [];
-        text.split('\r\n').forEach((s) => {
+        text.split(/[\r\n]+/).forEach((s) => {
             if (s !== '') {
                 lines.push(s);
             }
