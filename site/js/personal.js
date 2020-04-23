@@ -17,7 +17,7 @@
         }
     ];
     let page;
-    let vnote;
+    let vnote = undefined;
     let cur = 0;
 
     function init() {
@@ -30,14 +30,13 @@
         new Vue({
             el: '#info',
             data: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                text: 'Here, we will use a CFG to randomly generate an origin story for this person. The origin story will be about 100 words long, probably 6 to 8 sentences.'
             }
         });
         id('messages-img').addEventListener('click', getNotes);
         id('close').addEventListener('click', close);
         id('right').addEventListener('click', () => slide(1));
         id('left').addEventListener('click', () => slide(-1));
-        getNotes();
     }
 
     function close() {
@@ -64,22 +63,24 @@
 
     function getNotes() {
         if (verify()) {
-            // let response = await fetch('notes/notes.json');
-            // let json = await response.json();
-            vnote = new Vue({
-                el: '#note',
-                data: {
-                    name: '',
-                    message: ''
-                }
-            });
-            page = new Vue({
-                el: '#pagenum',
-                data: {
-                    num: ''
-                }
-            });
-            jump(0);
+            if (vnote === undefined) {
+                // let response = await fetch('notes/notes.json');
+                // let json = await response.json();
+                vnote = new Vue({
+                    el: '#note',
+                    data: {
+                        name: '',
+                        message: ''
+                    }
+                });
+                page = new Vue({
+                    el: '#pagenum',
+                    data: {
+                        num: ''
+                    }
+                });
+            }
+            jump(cur);
             id('notes-view').classList.remove('hidden');
         }
     }
