@@ -3,13 +3,12 @@ This website is a gift to commemorate Sisters Appreciation Day in year 2020. In 
 
 ## Main Page
 The main page will include the following:
-* Title Banner
 * Introduction to the website theme
-* A wanted poster of each sister
+* Cell block of everyone in their cells
 
 ## Personal Pages
 Each personal page will include the following:
-* a detailed wanted poster of their name, title, year, and short description
+* a detailed wanted poster of their name, punishment, and description of their crime
 * appreciation notes
 
 ## Game Page
