@@ -12,39 +12,27 @@
 
 <body>
     <ul id="navbar">
+        <li id="title">{{ title }}</li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}
             </li>
         </a>
     </ul>
-    <h1>Cell Block A</h1>
     <section id="content">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
-        <img src="img/cell.png">
+        <div class="cell" v-for="name in names">
+            <a v-bind:href=name.link>
+                <img src="img/cell.png">
+                <h3>{{ name.name }}</h3>
+            </a>
+        </div>
     </section>
+    <div id="popup-view">
+        <img id="close" src="img/close.png" alt="close">
+        <section class="popup">
+            this is a popup.
+        </section>
+    </div>
 </body>
 
 </html>

@@ -51,7 +51,7 @@
     /* Note stuff */
 
     function close() {
-        id('notes-view').classList.add('hidden');
+        id('popup-view').classList.add('hidden');
     }
 
     function slide(dir) {
@@ -98,7 +98,7 @@
                 json[initials].forEach(s => fetchNote(s));
             }
             jump(cur);
-            id('notes-view').classList.remove('hidden');
+            id('popup-view').classList.remove('hidden');
         }
     }
 
