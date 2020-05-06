@@ -22,9 +22,9 @@
     <section id="content">
         <div class="cell" v-for="name in names">
             <a v-bind:href=name.link>
+                <h3>{{ name.name }}</h3>
                 <img class="face" v-bind:src=name.img>
                 <img class="bars" src="img/cell.png">
-                <h3>{{ name.name }}</h3>
             </a>
         </div>
     </section>

@@ -148,10 +148,11 @@ h1 {
 
 .cell {
     height: 200px;
-    margin: 30px 0px 120px 50px;
+    margin: 10px -100px 140px 30px;
 }
 
 .cell h3 {
+    width: 200px;
     color: white;
     text-align: center;
 }
