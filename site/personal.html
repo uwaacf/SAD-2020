@@ -27,14 +27,12 @@
             <p>{{ info }}</p>
         </article>
     </section>
-    <article id="notes-view" class="hidden">
+    <article id="popup-view" class="hidden">
         <img id="close" src="img/close.png" alt="close">
         <section id="messages">
-            <div class="slideshow">
-                <div id="note">
-                    <p v-for="paragraph in paragraphs">{{ paragraph }}</p>
-                    <h1>- {{ name }}</h1>
-                </div>
+            <div id="note" class="popup">
+                <p v-for="paragraph in paragraphs">{{ paragraph }}</p>
+                <h1>- {{ name }}</h1>
             </div>
         </section>
         <div id="left" class="arrow">
