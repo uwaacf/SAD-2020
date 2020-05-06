@@ -1,0 +1,54 @@
+#content {
+    width: 100%;
+    padding: 0px;
+    background-image: none;
+}
+
+article {
+    min-width: 1024px;
+    margin-top: 20px;
+    background-color: white;
+}
+
+article p {
+    text-align: center;
+}
+
+#game {
+    height: 768px;
+}
+
+#menu-view {
+    float: middle;
+    height: 768px;
+    width: 1024px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+    color: white;
+    opacity: 85%;
+}
+
+#menu-view h1 {
+    color: white;
+    font-family: 'Octin Prison', Georgia, 'Times New Roman', Times, serif;
+    font-size: 36pt;
+    letter-spacing: 4pt;
+}
+
+#menu-view p {
+    font-size: 24pt;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#menu-view.hidden {
+    pointer-events: none;
+    opacity: 0%;
+}
+
+#game-view,
+#menu-view {
+    position: absolute;
+}

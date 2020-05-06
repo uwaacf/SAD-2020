@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Octin Prison';
+    src: url('octin-prison.ttf');
+}
+
 body {
     margin: 0;
     padding: 0;

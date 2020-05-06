@@ -1,9 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script|Special+Elite&display=swap');
-@font-face {
-    font-family: 'Octin Prison';
-    src: url('octin-prison.ttf');
-}
-
 #content {
     pointer-events: auto;
     width: 1000px;

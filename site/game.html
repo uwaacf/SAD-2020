@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SAD</title>
+    <!-- Using Vue.js - be sure to check their docs! -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <script src="js/nav.js"></script>
+    <script src="js/game.js"></script>
+</head>
+
+<body>
+    <ul id="navbar">
+        <li id="title">{{ title }}</li>
+        <a class="nav-item" v-for="item in items" v-bind:href=item.link>
+            <li>
+                {{ item.text }}
+            </li>
+        </a>
+    </ul>
+    <section id="content">
+        <article id="intructions">
+            <h1>Instructions</h1>
+            <p>The goal is to escape the jail. Click or press space to jump. Press and hold to slow down.</p>
+        </article>
+        <article id="game">
+            <canvas id="game-view">
+            </canvas>
+            <div id="menu-view">
+                <h1 id="message">Game title</h1>
+                <p>Click to start a new game.</p>
+            </div>
+        </article>
+    </section>
+</body>
+
+</html>
