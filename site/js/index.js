@@ -15,14 +15,13 @@
         for (let initials in json) {
             cells.names.push({
                 name: json[initials],
-                link: `personal.html?prisoner=${initials}`
+                link: `personal.html?prisoner=${initials}`,
+                img: `img/${initials}.png`
             });
         }
         cells.names = shuffle(cells.names);
         id('close').addEventListener('click', close);
     }
-
-    /* Note stuff */
 
     function close() {
         id('popup-view').classList.add('hidden');
@@ -38,7 +37,6 @@
         }
         return a;
     }
-
 
     window.addEventListener('load', init);
 })();
