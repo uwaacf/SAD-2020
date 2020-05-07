@@ -101,7 +101,7 @@
                     this.update = () => this.updateToggle(false);
                     break
                 case (TOGGLE_WALL_B):
-                    this.update = () => this.updateToggle(false);
+                    this.update = () => this.updateToggle(true);
                     break;
                 default:
                     this.update = update || this.updateDefault;
@@ -128,7 +128,7 @@
                 } else if (this.color === 'red') {
                     this.color = 'white';
                     this.type = EMPTY;
-                    this.timer += 30;
+                    this.timer += 60;
                 } else {
                     this.color = 'orange';
                     this.type = EMPTY;
@@ -175,7 +175,6 @@
             components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
         }
         if (cd <= 0) {
-            /*
             let random = Math.trunc(Math.random() * 8);
             console.log(random);
             switch (random) {
@@ -187,7 +186,7 @@
                     pattern2();
                     break;
                 case 3:
-                    pattern3();
+                    pattern3(Math.trunc(Math.random() * 2 + 2));
                     break;
                 case 4:
                     pattern4();
@@ -199,8 +198,7 @@
                     let length = Math.trunc(TILE_WIDTH * (Math.random() + 1)) * TILE_SIZE;
                     randomTerrain(length);
                     cd += length + TILE_SIZE * 3;
-                    */
-            pattern3(2);
+            }
         }
         let remove = [];
         components.forEach((c) => {
@@ -235,7 +233,8 @@
         ctx.strokeStyle = '#000';
         ctx.font = '36px Arial';
         ctx.strokeText(`${Math.round(dist) / 10}m traveled`, 100, 100);
-        ctx.strokeText(`${Math.round(dist - tick * 4.5) / 10}m away`, 100, 200);
+        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 2.3) / 10}m away`, 100, 200);
+        ctx.strokeText(`${tick} ticks`, 100, 300);
     }
 
     function updatePlayer() {
@@ -298,8 +297,8 @@
                 case TOGGLE_SWITCH:
                     if (!onToggle) {
                         toggle = !toggle;
-                        onToggle = true;
                     }
+                    onToggle = true;
                     curOnToggle = true;
                     break;
                 case WALL:
@@ -449,21 +448,24 @@
 
     // super tunnel
     function pattern3(segments) {
+        let difficulty = Math.min(Math.sqrt(dist), 50);
         let tiles = [];
         let h = 6;
         let y = Math.trunc(Math.random() * (TILE_HEIGHT - h - 2)) + 1;
         let length = TILE_SIZE;
-        let front = new Array(TILE_HEIGHT).fill(SPIKE);
-        for (let i = 0; i < h; i++) {
-            front[i + y] = EMPTY;
+        if (difficulty / 50 > Math.random()) {
+            let front = new Array(TILE_HEIGHT).fill(SPIKE);
+            for (let i = 0; i < h; i++) {
+                front[i + y] = EMPTY;
+            }
+            tiles.push(front);
         }
-        tiles.push(front);
         for (let i = 0; i < segments; i++) {
-            // let type = Math.trunc(Math.random() * 6);
-            let type = 6;
+            let type = Math.trunc(Math.random() * 6);
             let spike = 0;
-            let spike2 = -Math.trunc(Math.random() * 5) - 14;
-            for (let seg = 0; seg < TILE_WIDTH; seg++) {
+            let spike2 = -Math.trunc(Math.random() * 5) - 10;
+            let len = 15 + Math.trunc(Math.random() * 5);
+            for (let seg = 0; seg < len; seg++) {
                 let col = new Array(TILE_HEIGHT).fill(WALL);
                 let fillType = false;
                 for (let x = 0; x < h; x++) {
@@ -477,7 +479,7 @@
                         b = y + h - 1;
                     case 1:
                         if (spike <= 0 && Math.random() < 0.1) {
-                            spike += Math.trunc(Math.random() * 6) + 6;
+                            spike += Math.trunc(Math.random() * 3) + difficulty / 10;
                         }
                         if (spike2 < 0 && Math.random() > 0.1) {
                             spike2 *= -1;
@@ -492,8 +494,8 @@
                         }
                         break;
                     case 2:
-                        if (seg % 12 === 5 || seg % 12 === 6) {
-                            if (Math.random() > 0.7) {
+                        if (seg % 8 === 5 || seg % 8 === 6) {
+                            if (Math.random() < difficulty / 60) {
                                 fillType = LASER;
                                 col[y] = LASER_BASE;
                             }
@@ -501,7 +503,7 @@
                         break;
                     case 3:
                         if (seg % 6 === 3) {
-                            if (Math.random() > 0.5) {
+                            if (Math.random() < difficulty / 70) {
                                 fillType = LASER;
                                 col[y] = LASER_BASE;
                             }
@@ -517,15 +519,24 @@
                     default:
                         if (seg < 4) {
                             break;
-                        } else if (seg <= 12) {
+                        } else if (seg <= 8) {
                             col.fill(EMPTY);
                         }
-                        if (seg === 12) {
-                            let loc = 3;
-                            col[loc] = TOGGLE_SWITCH;
+                        if (seg === 8) {
+                            let locs = [];
+                            for (let i = 2; i < TILE_HEIGHT - 2; i++) {
+                                if (Math.abs(i - y) > 3 && Math.abs(i - y - h) > 3) {
+                                    locs.push(i);
+                                }
+                            }
+                            col[locs[Math.trunc(Math.random() * locs.length)]] = TOGGLE_SWITCH;
                         }
-                        if (seg === 13) {
-                            fillType = toggle ? TOGGLE_WALL_A : TOGGLE_WALL_B;
+                        if (seg === 9) {
+                            if (Math.random() > 0.8) {
+                                fillType = toggle ? TOGGLE_WALL_B : TOGGLE_WALL_A;
+                            } else {
+                                fillType = toggle ? TOGGLE_WALL_A : TOGGLE_WALL_B;
+                            }
                             col[y] = fillType;
                         }
                 }
@@ -561,7 +572,7 @@
         cd = length + TILE_SIZE * 5;
     }
 
-    // path
+    // exit
     function pattern5() {
 
     }
@@ -612,7 +623,6 @@
                 for (let j = 0; j < shape[i].length; j++) {
                     col.push(shape[i][j]);
                 }
-                console.log(col);
                 newShape.push(col);
             }
             return newShape;
