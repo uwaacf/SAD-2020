@@ -4,6 +4,7 @@
     let id = x => document.getElementById(x);
     let qs = x => document.querySelector(x);
 
+    let gameover;
     let components;
     let ctx;
     let player;
@@ -53,6 +54,13 @@
         canvas.addEventListener('mousedown', slowDown);
         canvas.addEventListener('mouseup', run);
         id('menu-view').addEventListener('click', start);
+        gameover = new Vue({
+            el: '#gameover',
+            data: {
+                distance: 0,
+                death: ''
+            }
+        });
     }
 
     function slowDown() {
@@ -68,7 +76,7 @@
 
     function start() {
         id('menu-view').classList.add('hidden');
-        id('message').innerText = "You got caught.";
+        id('gameover').classList.remove('hidden');
         interval = setInterval(updateGameArea, 20);
         tick = 0;
         dist = 50;
@@ -168,7 +176,7 @@
         cd -= vx;
         dist += vx;
         drawGround();
-        if (dist <= tick * 4.5) {
+        if (dist <= tick * Math.log(tick) / 2.5) {
             // gameOver();
         }
         if (Math.min(Math.sqrt(dist), 50) / 10000 > Math.random()) {
@@ -233,7 +241,7 @@
         ctx.strokeStyle = '#000';
         ctx.font = '36px Arial';
         ctx.strokeText(`${Math.round(dist) / 10}m traveled`, 100, 100);
-        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 2.3) / 10}m away`, 100, 200);
+        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 2.5) / 10}m away`, 100, 200);
         ctx.strokeText(`${tick} ticks`, 100, 300);
     }
 
@@ -336,6 +344,8 @@
 
     function gameOver() {
         clearInterval(interval);
+        gameover.distance = Math.round(dist) / 10;
+        gameover.death = 'getting caught';
         id('menu-view').classList.remove('hidden');
     }
 
@@ -378,9 +388,9 @@
             let h = 4;
             let y = nextY;
             let w = TILE_SIZE * 2;
-            let laser = difficulty / 200 > Math.random();
             for (let x = 0; x < 2; x++) {
                 let col = new Array(TILE_HEIGHT).fill(WALL);
+                let laser = difficulty / 150 > Math.random();
                 col[y] = laser ? LASER_BASE : EMPTY;
                 for (let j = 1; j <= h; j++) {
                     col[y + j] = laser ? LASER : EMPTY;
