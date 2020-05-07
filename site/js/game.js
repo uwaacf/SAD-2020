@@ -91,11 +91,20 @@
             this.x = x;
             this.y = y;
             this.color = color;
-            if (type === LASER || type === LASER_BASE) {
-                this.timer = tick - update;
-                this.update = this.updateLaser;
-            } else {
-                this.update = update || this.updateDefault;
+            switch (type) {
+                case (LASER):
+                case (LASER_BASE):
+                    this.timer = tick - update;
+                    this.update = this.updateLaser;
+                    break;
+                case (TOGGLE_WALL_A):
+                    this.update = () => this.updateToggle(false);
+                    break
+                case (TOGGLE_WALL_B):
+                    this.update = () => this.updateToggle(false);
+                    break;
+                default:
+                    this.update = update || this.updateDefault;
             }
         }
 
@@ -112,7 +121,6 @@
         }
 
         updateLaser() {
-            this.updateDefault();
             if (this.timer < tick) {
                 if (this.color === 'orange') {
                     this.color = 'red';
@@ -120,18 +128,29 @@
                 } else if (this.color === 'red') {
                     this.color = 'white';
                     this.type = EMPTY;
-                    this.timer += 50;
+                    this.timer += 30;
                 } else {
                     this.color = 'orange';
                     this.type = EMPTY;
                 }
-                this.timer += 50;
+                this.timer += 30;
             }
+            this.updateDefault();
+        }
+
+        updateToggle(typeA) {
+            if (typeA == toggle) {
+                this.color = 'lightgray';
+                this.type = EMPTY;
+            } else {
+                this.color = 'gray';
+                this.type = WALL;
+            }
+            this.updateDefault();
         }
     }
 
     function updateMissile() {
-        this.updateDefault();
         if (this.x < WIDTH) {
             this.x -= 5;
         } else {
@@ -141,17 +160,7 @@
                 this.y -= 4;
             }
         }
-    }
-
-    function updateToggle(typeA) {
         this.updateDefault();
-        if (typeA == toggle) {
-            this.color = 'lightgray';
-            this.type = EMPTY;
-        } else {
-            this.color = 'gray';
-            this.type = WALL;
-        }
     }
 
     function updateGameArea() {
@@ -191,7 +200,7 @@
                     randomTerrain(length);
                     cd += length + TILE_SIZE * 3;
                     */
-            pattern1(Math.trunc(Math.random() * 3 + 4));
+            pattern3(2);
         }
         let remove = [];
         components.forEach((c) => {
@@ -244,24 +253,28 @@
             if (c.x < x + PLAYER_SIZE - 6 && c.x + c.width > x + 6) {
                 if (c.y < player.y) {
                     if (c.y + c.height >= player.y) {
-                        top = true;
-                        player.y = c.y + c.height;
                         on = true;
+                        if (c.type !== TOGGLE_SWITCH) {
+                            top = true;
+                            player.y = c.y + c.height;
+                        }
                     }
                 } else if (c.y < player.y + player.height) {
-                    bottom = true;
-                    player.y = c.y - player.height;
                     on = true;
+                    if (c.type !== TOGGLE_SWITCH) {
+                        bottom = true;
+                        player.y = c.y - player.height;
+                    }
                 }
             }
             if (c.y < player.y + PLAYER_SIZE - 6 && c.y + c.height > player.y + 6) {
                 if (c.x < player.x) {
                     if (c.x + c.width >= player.x) {
                         on = true;
-                        back = true;
+                        back = c.type !== TOGGLE_SWITCH;
                     }
                 } else if (c.x < player.x + player.width) {
-                    front = true;
+                    front = c.type !== TOGGLE_SWITCH;
                     on = true;
                 }
             }
@@ -274,6 +287,7 @@
             gameOver();
         }
 
+        let curOnToggle = false;
         onType.forEach((type) => {
             switch (type) {
                 case SPIKE:
@@ -282,7 +296,11 @@
                     gameOver();
                     break;
                 case TOGGLE_SWITCH:
-                    toggle = !toggle;
+                    if (!onToggle) {
+                        toggle = !toggle;
+                        onToggle = true;
+                    }
+                    curOnToggle = true;
                     break;
                 case WALL:
                     vx *= 0.9;
@@ -290,11 +308,12 @@
                     break;
             }
         });
+        onToggle = curOnToggle;
 
         // calculate physics
         if (slow && slow + 5 < tick) {
-            vx *= 0.91;
-            vy *= 0.91;
+            vx *= 0.85;
+            vy *= 0.9;
         } else {
             vx = TOP_X_SPEED * 0.03 + vx * 0.97;
             if (TOP_X_SPEED > 0 && TOP_X_SPEED - vx < 0.01) {
@@ -428,12 +447,105 @@
         cd = length;
     }
 
-    // forced locked door
-    function pattern3() {
+    // super tunnel
+    function pattern3(segments) {
+        let tiles = [];
+        let h = 6;
+        let y = Math.trunc(Math.random() * (TILE_HEIGHT - h - 2)) + 1;
+        let length = TILE_SIZE;
+        let front = new Array(TILE_HEIGHT).fill(SPIKE);
+        for (let i = 0; i < h; i++) {
+            front[i + y] = EMPTY;
+        }
+        tiles.push(front);
+        for (let i = 0; i < segments; i++) {
+            // let type = Math.trunc(Math.random() * 6);
+            let type = 6;
+            let spike = 0;
+            let spike2 = -Math.trunc(Math.random() * 5) - 14;
+            for (let seg = 0; seg < TILE_WIDTH; seg++) {
+                let col = new Array(TILE_HEIGHT).fill(WALL);
+                let fillType = false;
+                for (let x = 0; x < h; x++) {
+                    col[x + y] = EMPTY;
+                }
+                let a = y + h - 1;
+                let b = y;
+                switch (type) {
+                    case 0:
+                        a = y;
+                        b = y + h - 1;
+                    case 1:
+                        if (spike <= 0 && Math.random() < 0.1) {
+                            spike += Math.trunc(Math.random() * 6) + 6;
+                        }
+                        if (spike2 < 0 && Math.random() > 0.1) {
+                            spike2 *= -1;
+                        }
+                        if (spike2 > 0) {
+                            spike2--;
+                            col[a] = SPIKE;
+                        }
+                        if (spike > 0) {
+                            spike--;
+                            col[b] = SPIKE;
+                        }
+                        break;
+                    case 2:
+                        if (seg % 12 === 5 || seg % 12 === 6) {
+                            if (Math.random() > 0.7) {
+                                fillType = LASER;
+                                col[y] = LASER_BASE;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (seg % 6 === 3) {
+                            if (Math.random() > 0.5) {
+                                fillType = LASER;
+                                col[y] = LASER_BASE;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (seg % 5 === 0) {
+                            if (Math.random() > 0.7) {
+                                components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
+                            }
+                        }
+                        break;
+                    default:
+                        if (seg < 4) {
+                            break;
+                        } else if (seg <= 12) {
+                            col.fill(EMPTY);
+                        }
+                        if (seg === 12) {
+                            let loc = 3;
+                            col[loc] = TOGGLE_SWITCH;
+                        }
+                        if (seg === 13) {
+                            fillType = toggle ? TOGGLE_WALL_A : TOGGLE_WALL_B;
+                            col[y] = fillType;
+                        }
+                }
+                if (fillType) {
+                    for (let x = 1; x < h; x++) {
+                        col[x + y] = fillType;
+                    }
+                }
+                tiles.push(col);
+                length += TILE_SIZE;
+            }
+        }
+        for (let i = 0; i < tiles.length; i++) {
+            addColumn(tiles[i], WIDTH + i * TILE_SIZE);
 
+        }
+        cd = length + TILE_SIZE * 7;
     }
 
-    // timer based
+    // forced locked door
     function pattern4() {
         let difficulty = Math.min(Math.sqrt(dist), 50);
         let goodPath = Math.random() > 0.5;
@@ -449,7 +561,7 @@
         cd = length + TILE_SIZE * 5;
     }
 
-    // narrowing
+    // path
     function pattern5() {
 
     }
@@ -594,10 +706,10 @@
                     components.push(new Component(TILE_SIZE, TILE_SIZE, 'yellow', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case TOGGLE_WALL_A:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'gray', x, i * TILE_SIZE + GROUND_HEIGHT, c, () => updateToggle(false)));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'gray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case TOGGLE_WALL_B:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'lightgray', x, i * TILE_SIZE + GROUND_HEIGHT, c, () => updateToggle(true)));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'lightgray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
             }
         }
