@@ -1,5 +1,5 @@
-# WANTED
-This website is a gift to commemorate Sisters Appreciation Day in year 2020. In the website, there is a main page, one page for each sister, and a simple game that takes your throughout the website. Please give suggestions for what should be on each page!
+# SAD 2020
+This website is a gift to commemorate Sisters Appreciation Day in year 2020. In the website, there is a main page, one page for each sister, and a simple game.
 
 ## Main Page
 The main page will include the following:
@@ -8,11 +8,13 @@ The main page will include the following:
 
 ## Personal Pages
 Each personal page will include the following:
-* a detailed wanted poster of their name, punishment, and description of their crime
+* image of the cell
+* a criminal report of the person
 * appreciation notes
 
 ## Game Page
-The game page will detail a game (TBD)
+Jailbreak: run a specific distance to get out of jail.
+* completing the game changes the state of the cells (optional)
 
 ## Getting Started
 * Clone the repository (make sure you have permissions to modify!)
