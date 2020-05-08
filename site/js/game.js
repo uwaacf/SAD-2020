@@ -4,6 +4,7 @@
     let id = x => document.getElementById(x);
     let qs = x => document.querySelector(x);
 
+    let gameover;
     let components;
     let ctx;
     let player;
@@ -27,8 +28,8 @@
     let onToggle;
     let interval;
     // < 0 types are dangerous
-    let LASER = -4;
-    let LASER_BASE = -3;
+    let LASER = -4; // tile -> EMPTY/DANGER
+    let LASER_BASE = -3; // tile -> EMPTY/DANGER
     let SPIKE = -2; // tile
     let DANGER = -1;
     // these are passthrough
@@ -37,8 +38,8 @@
     let KEY = 2;
     // >= WALL types are impassable
     let WALL = 3; // tile
-    let TOGGLE_WALL_A = 4;
-    let TOGGLE_WALL_B = 5;
+    let TOGGLE_WALL_A = 4; // tile EMPTY/WALL
+    let TOGGLE_WALL_B = 5; // tile EMPTY/WALL
 
     function init() {
         ctx = id('game-view').getContext('2d');
@@ -53,6 +54,13 @@
         canvas.addEventListener('mousedown', slowDown);
         canvas.addEventListener('mouseup', run);
         id('menu-view').addEventListener('click', start);
+        gameover = new Vue({
+            el: '#gameover',
+            data: {
+                distance: 0,
+                death: ''
+            }
+        });
     }
 
     function slowDown() {
@@ -68,7 +76,7 @@
 
     function start() {
         id('menu-view').classList.add('hidden');
-        id('message').innerText = "You got caught.";
+        id('gameover').classList.remove('hidden');
         interval = setInterval(updateGameArea, 20);
         tick = 0;
         dist = 50;
@@ -91,7 +99,21 @@
             this.x = x;
             this.y = y;
             this.color = color;
-            this.update = update || this.updateDefault;
+            switch (type) {
+                case (LASER):
+                case (LASER_BASE):
+                    this.timer = tick - update;
+                    this.update = this.updateLaser;
+                    break;
+                case (TOGGLE_WALL_A):
+                    this.update = () => this.updateToggle(false);
+                    break
+                case (TOGGLE_WALL_B):
+                    this.update = () => this.updateToggle(true);
+                    break;
+                default:
+                    this.update = update || this.updateDefault;
+            }
         }
 
         updateDefault() {
@@ -105,10 +127,38 @@
                 ctx.fillRect(Math.trunc(this.x), Math.trunc(this.y), this.width, this.height);
             }
         }
+
+        updateLaser() {
+            if (this.timer < tick) {
+                if (this.color === 'orange') {
+                    this.color = 'red';
+                    this.type = DANGER;
+                } else if (this.color === 'red') {
+                    this.color = 'white';
+                    this.type = EMPTY;
+                    this.timer += 60;
+                } else {
+                    this.color = 'orange';
+                    this.type = EMPTY;
+                }
+                this.timer += 30;
+            }
+            this.updateDefault();
+        }
+
+        updateToggle(typeA) {
+            if (typeA == toggle) {
+                this.color = 'lightgray';
+                this.type = EMPTY;
+            } else {
+                this.color = 'gray';
+                this.type = WALL;
+            }
+            this.updateDefault();
+        }
     }
 
     function updateMissile() {
-        this.updateDefault();
         if (this.x < WIDTH) {
             this.x -= 5;
         } else {
@@ -118,33 +168,7 @@
                 this.y -= 4;
             }
         }
-    }
-
-    // states are two things: (color, type)
-    function updateLaser(times, states) {
         this.updateDefault();
-        if (!this.timer) {
-            this.state = 0;
-            this.timer = tick + times[0];
-        }
-        if (this.timer < tick) {
-            this.state = (this.state + 1) % times.length;
-            this.timer = tick + times[this.state];
-            let nextState = states[this.state];
-            this.color = nextState[0];
-            this.type = nextState[1];
-        }
-    }
-
-    function updateToggle(typeA) {
-        this.updateDefault();
-        if (typeA == toggle) {
-            this.color = 'lightgray';
-            this.type = EMPTY;
-        } else {
-            this.color = 'gray';
-            this.type = WALL;
-        }
     }
 
     function updateGameArea() {
@@ -152,8 +176,7 @@
         cd -= vx;
         dist += vx;
         drawGround();
-        drawUI();
-        if (dist <= tick * 4.5) {
+        if (dist <= tick * Math.log(tick) / 2.5) {
             // gameOver();
         }
         if (Math.min(Math.sqrt(dist), 50) / 10000 > Math.random()) {
@@ -171,7 +194,7 @@
                     pattern2();
                     break;
                 case 3:
-                    pattern3();
+                    pattern3(Math.trunc(Math.random() * 2 + 2));
                     break;
                 case 4:
                     pattern4();
@@ -185,7 +208,6 @@
                     cd += length + TILE_SIZE * 3;
             }
         }
-        updatePlayer();
         let remove = [];
         components.forEach((c) => {
             if (c.type === 'image') {
@@ -197,6 +219,8 @@
             }
             c.update();
         });
+        drawUI();
+        updatePlayer();
         remove.forEach((c) => {
             components.splice(components.indexOf(c), 1);
         });
@@ -217,7 +241,8 @@
         ctx.strokeStyle = '#000';
         ctx.font = '36px Arial';
         ctx.strokeText(`${Math.round(dist) / 10}m traveled`, 100, 100);
-        ctx.strokeText(`${Math.round(dist - tick * 4.5) / 10}m away`, 100, 200);
+        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 2.5) / 10}m away`, 100, 200);
+        ctx.strokeText(`${tick} ticks`, 100, 300);
     }
 
     function updatePlayer() {
@@ -228,28 +253,35 @@
         let onType = [];
         components.forEach((c) => {
             // Adjust hitbox numbers as needed.
+            if (c.type === EMPTY) {
+                return;
+            }
             let on = false;
             if (c.x < x + PLAYER_SIZE - 6 && c.x + c.width > x + 6) {
                 if (c.y < player.y) {
                     if (c.y + c.height >= player.y) {
-                        top = true;
-                        player.y = c.y + c.height;
                         on = true;
+                        if (c.type !== TOGGLE_SWITCH) {
+                            top = true;
+                            player.y = c.y + c.height;
+                        }
                     }
                 } else if (c.y < player.y + player.height) {
-                    bottom = true;
-                    player.y = c.y - player.height;
                     on = true;
+                    if (c.type !== TOGGLE_SWITCH) {
+                        bottom = true;
+                        player.y = c.y - player.height;
+                    }
                 }
             }
             if (c.y < player.y + PLAYER_SIZE - 6 && c.y + c.height > player.y + 6) {
                 if (c.x < player.x) {
                     if (c.x + c.width >= player.x) {
                         on = true;
-                        back = true;
+                        back = c.type !== TOGGLE_SWITCH;
                     }
                 } else if (c.x < player.x + player.width) {
-                    front = true;
+                    front = c.type !== TOGGLE_SWITCH;
                     on = true;
                 }
             }
@@ -262,6 +294,7 @@
             gameOver();
         }
 
+        let curOnToggle = false;
         onType.forEach((type) => {
             switch (type) {
                 case SPIKE:
@@ -270,7 +303,11 @@
                     gameOver();
                     break;
                 case TOGGLE_SWITCH:
-                    toggle = !toggle;
+                    if (!onToggle) {
+                        toggle = !toggle;
+                    }
+                    onToggle = true;
+                    curOnToggle = true;
                     break;
                 case WALL:
                     vx *= 0.9;
@@ -278,11 +315,12 @@
                     break;
             }
         });
+        onToggle = curOnToggle;
 
         // calculate physics
         if (slow && slow + 5 < tick) {
-            vx *= 0.91;
-            vy *= 0.91;
+            vx *= 0.85;
+            vy *= 0.9;
         } else {
             vx = TOP_X_SPEED * 0.03 + vx * 0.97;
             if (TOP_X_SPEED > 0 && TOP_X_SPEED - vx < 0.01) {
@@ -306,8 +344,39 @@
 
     function gameOver() {
         clearInterval(interval);
+        gameover.distance = Math.round(dist) / 10;
+        gameover.death = 'getting caught';
         id('menu-view').classList.remove('hidden');
     }
+
+    /* Block gen */
+
+    const BLANK_COL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const L = [
+        [1, 1, 1],
+        [1, 0, 0]
+    ];
+    const RL = [
+        [1, 1, 1],
+        [0, 0, 1]
+    ];
+    const T = [
+        [1, 1, 1],
+        [0, 1, 0]
+    ];
+    const Z = [
+        [1, 1, 0],
+        [0, 1, 1]
+    ];
+    const RZ = [
+        [0, 1, 1],
+        [1, 1, 0]
+    ];
+    const O = [
+        [1, 1],
+        [1, 1]
+    ];
+    const ARCHETYPES = [L, RL, T, Z, RZ, O];
 
     // random openings
     function pattern1(openings) {
@@ -320,13 +389,11 @@
             let y = nextY;
             let w = TILE_SIZE * 2;
             for (let x = 0; x < 2; x++) {
-                let col = [];
-                for (let j = 0; j < TILE_HEIGHT; j++) {
-                    if (j < y || j > y + h) {
-                        col.push(WALL);
-                    } else {
-                        col.push(EMPTY);
-                    }
+                let col = new Array(TILE_HEIGHT).fill(WALL);
+                let laser = difficulty / 150 > Math.random();
+                col[y] = laser ? LASER_BASE : EMPTY;
+                for (let j = 1; j <= h; j++) {
+                    col[y + j] = laser ? LASER : EMPTY;
                 }
                 tiles.push(col);
             }
@@ -334,7 +401,7 @@
             if (openings != i + 1) {
                 buffer = Math.trunc(Math.random() * 4 + 8);
                 nextY = Math.trunc(Math.random() * (TILE_HEIGHT - h));
-                let spiked = Math.abs(y - nextY) < 12 && difficulty / 100 > Math.random();
+                let spiked = Math.abs(y - nextY) < 12 && difficulty / 70 > Math.random();
                 for (let x = 0; x < buffer; x++) {
                     let col = [];
                     for (let j = 0; j < TILE_HEIGHT; j++) {
@@ -374,70 +441,165 @@
         for (let i = 0; i < tiles.length; i++) {
             addColumn(tiles[i], WIDTH + i * TILE_SIZE);
         }
-        cd = length + TILE_SIZE * 5;
+        cd = length + TILE_SIZE * 8;
     }
 
     // homing missiles
     function pattern2() {
         let length = 0;
-        let waves = Math.trunc(Math.random() * 3) + 4;
+        let waves = Math.trunc(Math.random() * 5) + 8;
+        randomTerrain(waves * TILE_SIZE * 3, dist / 2);
         for (let i = 0; i < waves; i++) {
             components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
-            length += 100;
+            length += TILE_SIZE * 3;
         }
-        randomTerrain(length, dist / 2);
-        cd = length + TILE_SIZE * 2;
+        cd = length;
+    }
+
+    // super tunnel
+    function pattern3(segments) {
+        let difficulty = Math.min(Math.sqrt(dist), 50);
+        let tiles = [];
+        let h = 6;
+        let y = Math.trunc(Math.random() * (TILE_HEIGHT - h - 2)) + 1;
+        let length = TILE_SIZE;
+        if (difficulty / 50 > Math.random()) {
+            let front = new Array(TILE_HEIGHT).fill(SPIKE);
+            for (let i = 0; i < h; i++) {
+                front[i + y] = EMPTY;
+            }
+            tiles.push(front);
+        }
+        for (let i = 0; i < segments; i++) {
+            let type = Math.trunc(Math.random() * 6);
+            let spike = 0;
+            let spike2 = -Math.trunc(Math.random() * 5) - 10;
+            let len = 15 + Math.trunc(Math.random() * 5);
+            for (let seg = 0; seg < len; seg++) {
+                let col = new Array(TILE_HEIGHT).fill(WALL);
+                let fillType = false;
+                for (let x = 0; x < h; x++) {
+                    col[x + y] = EMPTY;
+                }
+                let a = y + h - 1;
+                let b = y;
+                switch (type) {
+                    case 0:
+                        a = y;
+                        b = y + h - 1;
+                    case 1:
+                        if (spike <= 0 && Math.random() < 0.1) {
+                            spike += Math.trunc(Math.random() * 3) + difficulty / 10;
+                        }
+                        if (spike2 < 0 && Math.random() > 0.1) {
+                            spike2 *= -1;
+                        }
+                        if (spike2 > 0) {
+                            spike2--;
+                            col[a] = SPIKE;
+                        }
+                        if (spike > 0) {
+                            spike--;
+                            col[b] = SPIKE;
+                        }
+                        break;
+                    case 2:
+                        if (seg % 8 === 5 || seg % 8 === 6) {
+                            if (Math.random() < difficulty / 60) {
+                                fillType = LASER;
+                                col[y] = LASER_BASE;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (seg % 6 === 3) {
+                            if (Math.random() < difficulty / 70) {
+                                fillType = LASER;
+                                col[y] = LASER_BASE;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (seg % 5 === 0) {
+                            if (Math.random() > 0.7) {
+                                components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
+                            }
+                        }
+                        break;
+                    default:
+                        if (seg < 4) {
+                            break;
+                        } else if (seg <= 8) {
+                            col.fill(EMPTY);
+                        }
+                        if (seg === 8) {
+                            let locs = [];
+                            for (let i = 2; i < TILE_HEIGHT - 2; i++) {
+                                if (Math.abs(i - y) > 3 && Math.abs(i - y - h) > 3) {
+                                    locs.push(i);
+                                }
+                            }
+                            col[locs[Math.trunc(Math.random() * locs.length)]] = TOGGLE_SWITCH;
+                        }
+                        if (seg === 9) {
+                            if (Math.random() > 0.8) {
+                                fillType = toggle ? TOGGLE_WALL_B : TOGGLE_WALL_A;
+                            } else {
+                                fillType = toggle ? TOGGLE_WALL_A : TOGGLE_WALL_B;
+                            }
+                            col[y] = fillType;
+                        }
+                }
+                if (fillType) {
+                    for (let x = 1; x < h; x++) {
+                        col[x + y] = fillType;
+                    }
+                }
+                tiles.push(col);
+                length += TILE_SIZE;
+            }
+        }
+        for (let i = 0; i < tiles.length; i++) {
+            addColumn(tiles[i], WIDTH + i * TILE_SIZE);
+
+        }
+        cd = length + TILE_SIZE * 7;
     }
 
     // forced locked door
-    function pattern3() {
+    function pattern4() {
         let difficulty = Math.min(Math.sqrt(dist), 50);
         let goodPath = Math.random() > 0.5;
         let topA = Math.random() > 0.5;
         let tiles = [];
         let length = 0;
-        cd = length + 64;
         tiles.push(BLANK_COL);
         tiles.push(BLANK_COL);
-
+        for (let i = 0; i < TILE_HEIGHT; i++) {}
+        for (let i = 0; i < tiles.length; i++) {
+            addColumn(tiles[i], WIDTH + i * TILE_SIZE);
+        }
+        cd = length + TILE_SIZE * 5;
     }
 
-    // timer based
-    function pattern4() {
-
-    }
-
-    // narrowing
+    // exit
     function pattern5() {
 
     }
 
-    const BLANK_COL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const L = [
-        [1, 1, 1],
-        [1, 0, 0]
-    ];
-    const RL = [
-        [1, 1, 1],
-        [0, 0, 1]
-    ];
-    const T = [
-        [1, 1, 1],
-        [0, 1, 0]
-    ];
-    const Z = [
-        [1, 1, 0],
-        [0, 1, 1]
-    ];
-    const RZ = [
-        [0, 1, 1],
-        [1, 1, 0]
-    ];
-    const O = [
-        [1, 1],
-        [1, 1]
-    ];
-    const ARCHETYPES = [L, RL, T, Z, RZ, O];
+    function testPattern() {
+        addColumn([LASER_BASE, LASER, LASER, LASER, LASER,
+            WALL, WALL, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+        ], WIDTH);
+        addColumn([LASER_BASE, LASER, LASER, LASER, LASER,
+            WALL, WALL, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+        ], WIDTH + TILE_SIZE);
+        cd = WIDTH;
+    }
 
     // Add square, wall, or other such thing
     function randomTerrain(length, lvl) {
@@ -471,7 +633,6 @@
                 for (let j = 0; j < shape[i].length; j++) {
                     col.push(shape[i][j]);
                 }
-                console.log(col);
                 newShape.push(col);
             }
             return newShape;
@@ -545,6 +706,7 @@
             console.error(`Bad size: expected ${TILE_HEIGHT} but got ${col.length}`);
             return;
         }
+        let offset = Math.round(Math.random() * 200);
         for (let i = 0; i < col.length; i++) {
             let c = col[i];
             switch (c) {
@@ -555,16 +717,19 @@
                     components.push(new Component(TILE_SIZE, TILE_SIZE, 'blue', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case LASER:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'orange', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'orange', x, i * TILE_SIZE + GROUND_HEIGHT, c, offset));
+                    break;
+                case LASER_BASE:
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'orange', x, i * TILE_SIZE + GROUND_HEIGHT, c, offset));
                     break;
                 case TOGGLE_SWITCH:
                     components.push(new Component(TILE_SIZE, TILE_SIZE, 'yellow', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case TOGGLE_WALL_A:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'gray', x, i * TILE_SIZE + GROUND_HEIGHT, c, () => updateToggle(false)));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'gray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case TOGGLE_WALL_B:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'lightgray', x, i * TILE_SIZE + GROUND_HEIGHT, c, () => updateToggle(true)));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'lightgray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
             }
         }

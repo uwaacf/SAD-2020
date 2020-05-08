@@ -147,21 +147,35 @@ h1 {
 }
 
 .cell {
-    height: 350px;
+    height: 200px;
+    margin: 10px -100px 140px 30px;
 }
 
 .cell h3 {
+    width: 200px;
     color: white;
-    margin: 0px 100px 0px 30px;
     text-align: center;
-    position: relative;
-    top: -55px;
 }
 
 #content a {
     margin: 0px;
     padding: 0px;
     text-decoration: none;
+}
+
+.cell img {
+    width: auto;
+    position: relative;
+}
+
+img.face {
+    top: -10px;
+    height: 130px;
+}
+
+img.bars {
+    left: -140px;
+    height: 150px;
 }
 
 .arrow:hover,
