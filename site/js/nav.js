@@ -9,8 +9,10 @@
                 items: [
                     { text: "Home", link: "index.html" },
                     { text: "About", link: "about.html" },
-                    { text: "Bounty Hunt", link: "bountyhunt.html" }
-                ]
+                    { text: "Game", link: "game.html" },
+                    { text: "test", link: "personal.html?prisoner=tp" }
+                ],
+                title: "SAD BLOCK A"
             }
         });
     }

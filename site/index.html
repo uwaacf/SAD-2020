@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>WANTED</title>
+    <title>SAD</title>
     <!-- Using Vue.js - be sure to check their docs! -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -13,6 +13,7 @@
 
 <body>
     <ul id="navbar">
+        <li id="title">{{ title }}</li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}
@@ -20,9 +21,20 @@
         </a>
     </ul>
     <section id="content">
-        <h1 id="title">{{ text }}</h1>
-        <p id="info">{{ text }}</p>
+        <div class="cell" v-for="name in names">
+            <a v-bind:href=name.link>
+                <h3>{{ name.name }}</h3>
+                <img class="face" v-bind:src=name.img>
+                <img class="bars" src="img/cell.png">
+            </a>
+        </div>
     </section>
+    <div id="popup-view">
+        <img id="close" src="img/close.png" alt="close">
+        <section class="popup">
+            this is a popup.
+        </section>
+    </div>
 </body>
 
 </html>

@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script|Special+Elite&display=swap');
+#content {
+    pointer-events: auto;
+    width: 1000px;
+    z-index: 0;
+    font-family: 'Octin Prison', cursive;
+    background-image: url('../img/prison.png');
+}
+
+#content img {
+    margin: 0px 50px;
+    width: 300px;
+    height: 200px;
+}
+
+#description {
+    background-color: #fafafa;
+    color: #222;
+    padding: 40px;
+    height: 440px;
+    width: 340px;
+    font-size: 10pt;
+    line-height: 1.5em;
+    text-align: justify;
+    letter-spacing: 1px;
+}
+
+#description h1 {
+    margin-top: 0px;
+    font-size: 16pt;
+    text-align: center;
+}
+
+.arrow {
+    display: flex;
+    width: 50px;
+    height: 80px;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    margin-top: -50px;
+    z-index: 999;
+    transition: 0.3s ease;
+}
+
+.arrow img {
+    height: 50px;
+}
+
+#right {
+    right: 50%;
+    margin-right: -415px;
+}
+
+#left {
+    left: 50%;
+    margin-left: -405px;
+}
+
+.arrow:hover {
+    filter: brightness(150%);
+}
+
+.arrow:active {
+    transition: 0s;
+    filter: brightness(50%);
+}
+
+#pagenum {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    color: white;
+    bottom: 50%;
+    font-size: 14pt;
+    margin-bottom: -350px;
+}
