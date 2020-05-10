@@ -65,7 +65,7 @@
 
     function slowDown() {
         if (!slow) {
-            slow = tick;
+            slow = tick + 5;
         }
     }
 
@@ -179,7 +179,7 @@
         if (dist <= tick * Math.log(tick) / 2.5) {
             // gameOver();
         }
-        if (Math.min(Math.sqrt(dist), 50) / 10000 > Math.random()) {
+        if (Math.min(Math.sqrt(dist), 50) / 30000 > Math.random()) {
             components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
         }
         if (cd <= 0) {
@@ -318,7 +318,7 @@
         onToggle = curOnToggle;
 
         // calculate physics
-        if (slow && slow + 5 < tick) {
+        if (slow && slow < tick) {
             vx *= 0.85;
             vy *= 0.9;
         } else {
@@ -326,7 +326,7 @@
             if (TOP_X_SPEED > 0 && TOP_X_SPEED - vx < 0.01) {
                 vx = TOP_X_SPEED;
             }
-            vy = TOP_Y_SPEED * 0.1 + vy * 0.9;
+            vy = TOP_Y_SPEED * 0.3 + vy * 0.7;
         }
         if ((vy > 0 && !bottom) || (vy < 0 && !top)) {
             player.y += vy;
