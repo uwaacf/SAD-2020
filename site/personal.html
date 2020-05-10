@@ -20,12 +20,17 @@
         </a>
     </ul>
     <section id="content">
-        <img id="bg" src="img/prison.jpg" alt="Prison Cell" />
-        <img id="face" v-bind:src=img>
-        <img id="messages-img" src="img/transparent.png" alt="Joyce" />
+        <section id="images">
+            <img id="bg" src="img/prison.jpg" alt="Prison Cell" />
+            <div id="user-img">
+                <img id="face" v-bind:src=img>
+            </div>
+            <div id="msg-img">
+                <img id="messages-img" src="img/transparent.png" alt="Joyce" />
+            </div>
+        </section>
         <article id="description">
             <h1 id="title">{{ title }}</h1>
-            <p>Imprisoned for: {{ crime }}</p>
             <p>{{ info }}</p>
         </article>
     </section>
