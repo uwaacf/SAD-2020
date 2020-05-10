@@ -2,6 +2,7 @@
     "use strict";
 
     let id = x => document.getElementById(x);
+    let inits = {};
 
     async function init() {
         let cells = new Vue({
@@ -31,6 +32,7 @@
         let response = await fetch('resources/names.json');
         let json = await response.json();
         for (let initials in json) {
+            inits[json[initials]] = initials;
             options.names.push(json[initials]);
             cells.names.push({
                 name: json[initials],
@@ -72,6 +74,7 @@
         let json = await auth.json();
         if (json[`${user}`] === `${pass}`) {
             document.cookie = `pass=${password};path=/`;
+            document.cookie = `inits=${inits[name]};path=/`;
             id('submit').disabled = false;
             close();
         } else {

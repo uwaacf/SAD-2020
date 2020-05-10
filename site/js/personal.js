@@ -36,18 +36,33 @@
             }
         });
         let params = window.location.search;
-        params.replace('?', '').split('&').forEach((s) => {
-            let kv = s.split('=');
-            if (kv[0] === 'prisoner') {
-                initials = kv[1];
+        let seeNotes = false;
+        if (params) {
+            params.replace('?', '').split('&').forEach((s) => {
+                let kv = s.split('=');
+                if (kv[0] === 'prisoner') {
+                    initials = kv[1];
+                }
+            });
+        } else {
+            let inits = getCookie('inits');
+            if (inits) {
+                initials = inits;
             }
-        });
+            seeNotes = true;
+        }
         let names = await fetch('resources/names.json');
         let json = await names.json();
         prisoner = json[initials];
         name = prisoner;
         title.name = prisoner;
         description.title = prisoner;
+        if (!name) {
+            window.location.href = "index.html";
+        }
+        if (seeNotes) {
+            getNotes();
+        }
     }
 
     /* Note stuff */

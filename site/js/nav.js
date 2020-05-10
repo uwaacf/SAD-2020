@@ -11,7 +11,8 @@
                     { text: "About", link: "about.html" },
                     { text: "Game", link: "game.html" },
                     { text: "test", link: "personal.html?prisoner=tp" },
-                    { text: "Log Out", link: "?logout" }
+                    { text: "Notes", link: "personal.html" },
+                    { text: "Log Out", link: "index.html?logout" }
                 ],
                 title: "SAD BLOCK A"
             }
