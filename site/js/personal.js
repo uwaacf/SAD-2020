@@ -34,6 +34,12 @@
                 info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel bibendum diam. Aliquam lobortis, nisi sit amet consequat tempus, tortor augue egestas ex, sit amet fermentum metus lectus vel velit. Proin varius orci efficitur dui maximus, et dictum neque pharetra. Nulla facilisi. Sed vel facilisis diam, ut auctor est. Donec ullamcorper luctus nibh, ultricies consequat ligula vestibulum in. Aliquam vel enim lorem. Duis mattis odio arcu, vel vehicula velit iaculis ut. In malesuada tempus porta. Donec tincidunt accumsan felis et ultricies. Curabitur pellentesque mi id purus aliquet tempus. Pellentesque ullamcorper, odio eu posuere interdum, odio urna cursus elit, in molestie.'
             }
         });
+        let image = new Vue({
+            el: '#face',
+            data: {
+                img: ''
+            }
+        });
         let params = window.location.search;
         params.replace('?', '').split('&').forEach((s) => {
             let kv = s.split('=');
@@ -46,6 +52,7 @@
         prisoner = json[initials];
         title.name = prisoner;
         description.title = prisoner;
+        image.img = 'img/' + initials + '.png';
     }
 
     /* Note stuff */
@@ -66,7 +73,7 @@
 
     function jump(index) {
         if (cur >= notes.length) {
-            // Wait 
+            // Wait
             setTimeout(() => jump(index), 100);
         } else {
             cur = index;

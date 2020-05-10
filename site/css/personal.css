@@ -4,7 +4,7 @@
     width: 1000px;
     z-index: 0;
     font-family: 'Octin Prison', cursive;
-    background-image: url('../img/prison.png');
+    background-image: url("../img/transparent.png");
 }
 
 #content img {
