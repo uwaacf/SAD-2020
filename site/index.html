@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>SAD</title>
+    <title>S.A.D. Center</title>
     <!-- Using Vue.js - be sure to check their docs! -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -29,10 +29,25 @@
             </a>
         </div>
     </section>
-    <div id="popup-view">
+    <div id="popup-view" class="hidden">
         <img id="close" src="img/close.png" alt="close">
-        <section class="popup">
-            this is a popup.
+        <section id="intro" class="popup">
+            <h1>S.A.D. Center</h1>
+            <p>Welcome to the Center for something something something. This prison block houses a particularly wild set of individuals - that is, the AACF criminals, where we hope to rehabilitate each and every one. Click on a cell to take a closer look.
+                Due to our distancing protocol, the prison guards haven't approached the cells in a while, but they look like they're all still there.</p>
+            <p>Now, you should have received an ID for your visit. Enter your name and ID, and we give you VIP access into one of the cells. If you're a guest, feel free to just close this popup and take look around.</p>
+            <form id="login">
+                <label for="uname"><b>Name</b></label>
+                <select id="options" name="uname" required>
+                    <option></option>
+                    <option v-for="name in names" v-bind:value=name>{{ name }}</option>
+                </select>
+
+                <label for="psw"><b>Identifier</b></label>
+                <input type="text" placeholder="Enter ID" name="psw" required>
+
+                <button id="submit" type="submit">Login</button>
+            </form>
         </section>
     </div>
 </body>

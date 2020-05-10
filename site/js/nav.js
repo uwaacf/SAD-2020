@@ -10,7 +10,8 @@
                     { text: "Home", link: "index.html" },
                     { text: "About", link: "about.html" },
                     { text: "Game", link: "game.html" },
-                    { text: "test", link: "personal.html?prisoner=tp" }
+                    { text: "test", link: "personal.html?prisoner=tp" },
+                    { text: "Log Out", link: "?logout" }
                 ],
                 title: "SAD BLOCK A"
             }

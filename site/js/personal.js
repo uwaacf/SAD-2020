@@ -8,6 +8,7 @@
     let page;
     let prisoner;
     let initials;
+    let name;
     let cur = 0;
 
     function init() {
@@ -50,6 +51,7 @@
         let names = await fetch('resources/names.json');
         let json = await names.json();
         prisoner = json[initials];
+        name = prisoner;
         title.name = prisoner;
         description.title = prisoner;
         image.img = 'img/' + initials + '.png';
@@ -84,28 +86,39 @@
     }
 
     async function getNotes() {
-        if (verify()) {
-            if (vnote === undefined) {
-                vnote = new Vue({
-                    el: '#note',
-                    data: {
-                        name: '',
-                        paragraphs: ['reading message...']
-                    }
-                });
-                page = new Vue({
-                    el: '#pagenum',
-                    data: {
-                        num: '? / ?'
-                    }
-                });
-                notes = [];
-                let response = await fetch('resources/notes/notes.json');
-                let json = await response.json();
-                json[initials].forEach(s => fetchNote(s));
+        let password = getCookie('pass');
+        if (!password) {
+            alert('Please identify yourself on the homepage first!');
+        } else {
+            let user = (name + password).hashCode();
+            let pass = password.hashCode();
+            let auth = await fetch('resources/passwords.json');
+            let json = await auth.json();
+            if (json[`${user}`] === `${pass}`) {
+                if (vnote === undefined) {
+                    vnote = new Vue({
+                        el: '#note',
+                        data: {
+                            name: '',
+                            paragraphs: ['reading message...']
+                        }
+                    });
+                    page = new Vue({
+                        el: '#pagenum',
+                        data: {
+                            num: '? / ?'
+                        }
+                    });
+                    notes = [];
+                    let response = await fetch('resources/notes/notes.json');
+                    let json = await response.json();
+                    json[initials].forEach(s => fetchNote(s));
+                }
+                jump(cur);
+                id('popup-view').classList.remove('hidden');
+            } else {
+                alert(`You do not have permission to look at ${name}'s notes!`);
             }
-            jump(cur);
-            id('popup-view').classList.remove('hidden');
         }
     }
 
@@ -121,9 +134,34 @@
         notes.push({ 'name': name, paragraphs: lines });
     }
 
-    async function verify() {
-        return true;
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     }
+
+    Object.defineProperty(String.prototype, 'hashCode', {
+        value: function() {
+            var hash = 0,
+                i, chr;
+            for (i = 0; i < this.length; i++) {
+                chr = this.charCodeAt(i);
+                hash = ((hash << 5) - hash) + chr;
+                hash |= 0; // Convert to 32bit integer
+            }
+            return hash;
+        }
+    });
 
     window.addEventListener('load', init);
 })();
