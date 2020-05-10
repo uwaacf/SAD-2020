@@ -4,13 +4,40 @@
     width: 1000px;
     z-index: 0;
     font-family: 'Octin Prison', cursive;
-    background-image: url('../img/prison.png');
+    background-image: url("../img/transparent.png");
 }
 
-#content img {
+#images {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 50px;
+}
+
+#images img {
     margin: 0px 50px;
+}
+
+#user-img {
+    position: absolute;
+    top: 48%;
+    left: 11.75%;
+}
+
+#msg-img {
+    position: absolute;
+    top: 75%;
+    left: 69%;
+}
+
+#face {
     width: 300px;
-    height: 200px;
+    height: 300px;
+}
+
+#messages-img {
+    width: 320px;
+    height: 220px;
 }
 
 #description {
@@ -19,9 +46,8 @@
     padding: 40px;
     height: 440px;
     width: 340px;
-    font-size: 10pt;
+    font-size: 11pt;
     line-height: 1.5em;
-    text-align: justify;
     letter-spacing: 1px;
 }
 
