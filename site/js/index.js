@@ -75,8 +75,8 @@
             id('submit').disabled = false;
             close();
         } else {
+            console.log(`"${user}": "${pass}"`);
             alert('Wrong password!');
-            console.log(`"${user}": "${pass}`);
             id('submit').disabled = false;
         }
         return false;
