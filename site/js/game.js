@@ -35,7 +35,7 @@
     // these are passthrough
     let EMPTY = 0; // tile
     let TOGGLE_SWITCH = 1;
-    let KEY = 2;
+    let WIN = 2;
     // >= WALL types are impassable
     let WALL = 3; // tile
     let TOGGLE_WALL_A = 4; // tile EMPTY/WALL
@@ -176,48 +176,53 @@
         cd -= vx;
         dist += vx;
         drawGround();
-        if (dist <= tick * Math.log(tick) / 2.5) {
-            // gameOver();
+        if (dist <= tick * Math.log(tick) / 2.2) {
+            gameOver();
         }
         if (Math.min(Math.sqrt(dist), 50) / 30000 > Math.random()) {
             components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
         }
         if (cd <= 0) {
-            let random = Math.trunc(Math.random() * 8);
-            console.log(random);
-            switch (random) {
-                case 0:
-                case 1:
-                    pattern1(Math.trunc(Math.random() * 3 + 4));
-                    break;
-                case 2:
-                    pattern2();
-                    break;
-                case 3:
-                    pattern3(Math.trunc(Math.random() * 2 + 2));
-                    break;
-                case 4:
-                    pattern4();
-                    break;
-                case 5:
-                    pattern5();
-                    break;
-                default:
-                    let length = Math.trunc(TILE_WIDTH * (Math.random() + 1)) * TILE_SIZE;
-                    randomTerrain(length);
-                    cd += length + TILE_SIZE * 3;
+            if (dist > 30000) {
+                pattern5();
+            } else {
+                let random = Math.trunc(Math.random() * 6);
+                switch (random) {
+                    case 0:
+                    case 1:
+                        pattern1(Math.trunc(Math.random() * 3 + 4));
+                        break;
+                    case 2:
+                        pattern2();
+                        break;
+                    case 3:
+                        pattern3(Math.trunc(Math.random() * 2 + 2));
+                        break;
+                    case 4:
+                        pattern4();
+                        break;
+                    default:
+                        let length = Math.trunc(TILE_WIDTH * (Math.random() + 1)) * TILE_SIZE;
+                        randomTerrain(length);
+                        cd += length + TILE_SIZE * 3;
+                }
             }
         }
         let remove = [];
         components.forEach((c) => {
-            if (c.type === 'image') {
-                c.image.src = `img/${c.color}${tick % 3 + 1}.png`;
-            }
             c.x -= vx;
             if (c.x + c.width < -TILE_SIZE * 2) {
                 remove.push(c);
             }
-            c.update();
+            if (c.type >= 0) {
+                c.update();
+            }
+        });
+        // Force dangerous elements to the front
+        components.forEach((c) => {
+            if (c.type < 0) {
+                c.update();
+            }
         });
         drawUI();
         updatePlayer();
@@ -241,7 +246,7 @@
         ctx.strokeStyle = '#000';
         ctx.font = '36px Arial';
         ctx.strokeText(`${Math.round(dist) / 10}m traveled`, 100, 100);
-        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 2.5) / 10}m away`, 100, 200);
+        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 1.9) / 10}m away`, 100, 200);
         ctx.strokeText(`${tick} ticks`, 100, 300);
     }
 
@@ -291,7 +296,7 @@
         });
         // Set wall collision
         if (player.y + player.height > HEIGHT - GROUND_HEIGHT || player.y < GROUND_HEIGHT) {
-            gameOver();
+            gameOver('ran into the wall and got caught.');
         }
 
         let curOnToggle = false;
@@ -300,7 +305,7 @@
                 case SPIKE:
                 case LASER:
                 case DANGER:
-                    gameOver();
+                    gameOver('got caught.');
                     break;
                 case TOGGLE_SWITCH:
                     if (!onToggle) {
@@ -311,6 +316,11 @@
                     break;
                 case WALL:
                     vx *= 0.9;
+                    break;
+                case WIN:
+                    // do something?
+                    gameOver('escaped!');
+                    break;
                 default:
                     break;
             }
@@ -319,14 +329,14 @@
 
         // calculate physics
         if (slow && slow < tick) {
-            vx *= 0.85;
-            vy *= 0.9;
+            vx *= 0.75;
+            vy *= 0.75;
         } else {
             vx = TOP_X_SPEED * 0.03 + vx * 0.97;
             if (TOP_X_SPEED > 0 && TOP_X_SPEED - vx < 0.01) {
                 vx = TOP_X_SPEED;
             }
-            vy = TOP_Y_SPEED * 0.3 + vy * 0.7;
+            vy = TOP_Y_SPEED * 0.1 + vy * 0.9;
         }
         if ((vy > 0 && !bottom) || (vy < 0 && !top)) {
             player.y += vy;
@@ -342,10 +352,10 @@
         player.update();
     }
 
-    function gameOver() {
+    function gameOver(reason) {
         clearInterval(interval);
         gameover.distance = Math.round(dist) / 10;
-        gameover.death = 'getting caught';
+        gameover.death = reason;
         id('menu-view').classList.remove('hidden');
     }
 
@@ -447,11 +457,11 @@
     // homing missiles
     function pattern2() {
         let length = 0;
-        let waves = Math.trunc(Math.random() * 5) + 8;
+        let waves = Math.trunc(Math.random() * 5) + 6;
         randomTerrain(waves * TILE_SIZE * 3, dist / 2);
         for (let i = 0; i < waves; i++) {
-            components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
-            length += TILE_SIZE * 3;
+            components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length + TILE_SIZE * 8, player.y, DANGER, updateMissile));
+            length += TILE_SIZE * 5;
         }
         cd = length;
     }
@@ -568,37 +578,100 @@
 
     // forced locked door
     function pattern4() {
-        let difficulty = Math.min(Math.sqrt(dist), 50);
         let goodPath = Math.random() > 0.5;
         let topA = Math.random() > 0.5;
+        let path1 = 1;
+        let path2 = 12;
+        let h = 6;
         let tiles = [];
         let length = 0;
         tiles.push(BLANK_COL);
-        tiles.push(BLANK_COL);
-        for (let i = 0; i < TILE_HEIGHT; i++) {}
+        let lever = new Array(TILE_HEIGHT).fill(EMPTY);
+        lever[Math.trunc(Math.random() * 2) + 9] = TOGGLE_SWITCH;
+        tiles.push(lever);
+        let front = new Array(TILE_HEIGHT).fill(WALL);
+        for (let i = 0; i < TILE_HEIGHT; i++) {
+            if (i > path1 && i < path1 + h) {
+                front[i] = topA ? TOGGLE_WALL_A : TOGGLE_WALL_B;
+            } else if (i > path2 && i < path2 + h) {
+                front[i] = !topA ? TOGGLE_WALL_A : TOGGLE_WALL_B;
+            }
+        }
+        tiles.push(front);
+        let top = Math.trunc(Math.random() * 4);
+        let bot = Math.trunc(Math.random() * 4) + 4;
+        if (goodPath) {
+            let temp = top;
+            top = bot;
+            bot = temp;
+        }
+        for (let x = 0; x < 20; x++) {
+            let col = [];
+            for (let i = 0; i < TILE_HEIGHT; i++) {
+                if (i > path1 && i < path1 + h) {
+                    col.push(pattern4Helper(x, i - path1, top));
+                } else if (i > path2 && i < path2 + h) {
+                    col.push(pattern4Helper(x, i - path2, bot));
+                } else {
+                    col.push(WALL);
+                }
+            }
+            tiles.push(col);
+            length += TILE_SIZE;
+        }
         for (let i = 0; i < tiles.length; i++) {
             addColumn(tiles[i], WIDTH + i * TILE_SIZE);
         }
-        cd = length + TILE_SIZE * 5;
+        cd = length + TILE_SIZE * 10;
+    }
+
+    // 0~2 are easier, 3~5 are harder
+    function pattern4Helper(x, offset, type) {
+        let difficulty = Math.min(Math.sqrt(dist), 50);
+        switch (type) {
+            case 0:
+                return EMPTY;
+            case 1:
+                return offset === 1 && x > 2 && x < 17 ? SPIKE : EMPTY;
+            case 2:
+                return offset === 5 && x > 2 && x < 17 ? SPIKE : EMPTY;
+            case 3:
+                if (x % 8 === 2) {
+                    if (offset === 0) {
+                        return LASER_BASE;
+                    }
+                    return LASER;
+                } else {
+                    return EMPTY;
+                }
+            case 4:
+                if (x > 10) {
+                    return WALL;
+                } else if (x > 9) {
+                    return SPIKE;
+                }
+                return EMPTY;
+            case 5:
+                if (x % 4 === 2) {
+                    if (offset === 0) {
+                        return LASER_BASE;
+                    }
+                    return LASER;
+                } else {
+                    return EMPTY;
+                }
+            case 6:
+                return Math.random() < difficulty / 250 ? SPIKE : EMPTY;
+            case 7:
+                let sin_base = Math.sin(x / 1.4 + dist) * 1.2 + 1;
+                return offset >= sin_base && offset <= sin_base + 4.3 ? EMPTY : SPIKE;
+        }
     }
 
     // exit
     function pattern5() {
-
-    }
-
-    function testPattern() {
-        addColumn([LASER_BASE, LASER, LASER, LASER, LASER,
-            WALL, WALL, EMPTY, EMPTY, EMPTY,
-            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
-        ], WIDTH);
-        addColumn([LASER_BASE, LASER, LASER, LASER, LASER,
-            WALL, WALL, EMPTY, EMPTY, EMPTY,
-            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-            EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
-        ], WIDTH + TILE_SIZE);
-        cd = WIDTH;
+        addColumn(new Array(TILE_HEIGHT).fill(WIN), WIDTH);
+        cd = WIDTH * 5;
     }
 
     // Add square, wall, or other such thing
@@ -730,6 +803,9 @@
                     break;
                 case TOGGLE_WALL_B:
                     components.push(new Component(TILE_SIZE, TILE_SIZE, 'lightgray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    break;
+                case WIN:
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'green', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
             }
         }
