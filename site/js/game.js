@@ -27,6 +27,7 @@
     let toggle;
     let onToggle;
     let interval;
+    let bg;
     // < 0 types are dangerous
     let LASER = -4; // tile -> EMPTY/DANGER
     let LASER_BASE = -3; // tile -> EMPTY/DANGER
@@ -43,9 +44,7 @@
 
     function init() {
         ctx = id('game-view').getContext('2d');
-        // player = new Component(PLAYER_SIZE, PLAYER_SIZE, "run", x, HEIGHT / 2, "image");
-        player = new Component(PLAYER_SIZE, PLAYER_SIZE, "green", x, HEIGHT / 2, "player");
-        // components.push(player);
+        player = new Component(PLAYER_SIZE, PLAYER_SIZE, 'run1', x, HEIGHT / 2, "player");
         window.addEventListener('keydown', slowDown);
         window.addEventListener('keyup', run);
         let canvas = id('game-view');
@@ -61,6 +60,8 @@
                 death: ''
             }
         });
+        bg = new Image();
+        bg.src = 'img/game/gfloor.png';
     }
 
     function slowDown() {
@@ -89,21 +90,23 @@
     }
 
     class Component {
-        constructor(width, height, color, x, y, type, update) {
+        constructor(width, height, src, x, y, type, update) {
             this.type = type;
-            if (type == 'image') {
-                this.image = new Image();
-            }
+            this.src = src;
             this.width = width;
             this.height = height;
             this.x = x;
             this.y = y;
-            this.color = color;
+            this.image = new Image();
             switch (type) {
                 case (LASER):
                 case (LASER_BASE):
+                    this.image.src = `img/game/${this.src}1.png`;
                     this.timer = tick - update;
                     this.update = this.updateLaser;
+                    break;
+                case (TOGGLE_SWITCH):
+                    this.update = this.updateSwitch;
                     break;
                 case (TOGGLE_WALL_A):
                     this.update = () => this.updateToggle(false);
@@ -112,33 +115,29 @@
                     this.update = () => this.updateToggle(true);
                     break;
                 default:
+                    this.image.src = `img/game/${src}.png`;
                     this.update = update || this.updateDefault;
             }
         }
 
         updateDefault() {
-            if (this.type == 'image') {
-                ctx.drawImage(this.image,
-                    Math.trunc(this.x),
-                    Math.trunc(this.y),
-                    this.width, this.height);
-            } else {
-                ctx.fillStyle = this.color;
-                ctx.fillRect(Math.trunc(this.x), Math.trunc(this.y), this.width, this.height);
-            }
+            ctx.drawImage(this.image,
+                Math.trunc(this.x),
+                Math.trunc(this.y),
+                this.width, this.height);
         }
 
         updateLaser() {
-            if (this.timer < tick) {
-                if (this.color === 'orange') {
-                    this.color = 'red';
-                    this.type = DANGER;
-                } else if (this.color === 'red') {
-                    this.color = 'white';
+            while (this.timer < tick) {
+                if (this.image.src.includes(`${this.src}2`)) {
+                    this.image.src = `img/game/${this.src}3.png`;
+                    this.type = LASER;
+                } else if (this.image.src.includes(`${this.src}3`)) {
+                    this.image.src = `img/game/${this.src}1.png`;
                     this.type = EMPTY;
                     this.timer += 60;
                 } else {
-                    this.color = 'orange';
+                    this.image.src = `img/game/${this.src}2.png`;
                     this.type = EMPTY;
                 }
                 this.timer += 30;
@@ -148,11 +147,20 @@
 
         updateToggle(typeA) {
             if (typeA == toggle) {
-                this.color = 'lightgray';
+                this.image.src = 'img/game/block-b.png';
                 this.type = EMPTY;
             } else {
-                this.color = 'gray';
+                this.image.src = 'img/game/block-a.png';
                 this.type = WALL;
+            }
+            this.updateDefault();
+        }
+
+        updateSwitch() {
+            if (toggle) {
+                this.image.src = 'img/game/switch-a.png';
+            } else {
+                this.image.src = 'img/game/switch-b.png';
             }
             this.updateDefault();
         }
@@ -176,11 +184,11 @@
         cd -= vx;
         dist += vx;
         drawGround();
-        if (dist <= tick * Math.log(tick) / 2.2) {
-            gameOver();
+        if (dist <= tick * Math.log(tick) / 1.9) {
+            gameOver('got caught by the police.');
         }
         if (Math.min(Math.sqrt(dist), 50) / 30000 > Math.random()) {
-            components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
+            missile(WIDTH + length, player.y);
         }
         if (cd <= 0) {
             if (dist > 30000) {
@@ -232,14 +240,8 @@
     }
 
     function drawGround() {
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, WIDTH, HEIGHT);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, HEIGHT - GROUND_HEIGHT + TILE_SIZE, WIDTH, GROUND_HEIGHT - TILE_SIZE);
-        ctx.fillRect(0, 0, WIDTH, GROUND_HEIGHT - TILE_SIZE);
-        ctx.fillStyle = 'red';
-        ctx.fillRect(0, HEIGHT - GROUND_HEIGHT, WIDTH, TILE_SIZE);
-        ctx.fillRect(0, GROUND_HEIGHT - TILE_SIZE, WIDTH, TILE_SIZE);
+        ctx.drawImage(bg, -dist % WIDTH + WIDTH, 0);
+        ctx.drawImage(bg, -dist % WIDTH, 0);
     }
 
     function drawUI() {
@@ -247,7 +249,6 @@
         ctx.font = '36px Arial';
         ctx.strokeText(`${Math.round(dist) / 10}m traveled`, 100, 100);
         ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 1.9) / 10}m away`, 100, 200);
-        ctx.strokeText(`${tick} ticks`, 100, 300);
     }
 
     function updatePlayer() {
@@ -262,13 +263,13 @@
                 return;
             }
             let on = false;
-            if (c.x < x + PLAYER_SIZE - 6 && c.x + c.width > x + 6) {
+            if (c.x < x + PLAYER_SIZE - 12 && c.x + c.width > x + 12) {
                 if (c.y < player.y) {
-                    if (c.y + c.height >= player.y) {
+                    if (c.y + c.height >= player.y + 6) {
                         on = true;
                         if (c.type !== TOGGLE_SWITCH) {
                             top = true;
-                            player.y = c.y + c.height;
+                            player.y = c.y + c.height - 6;
                         }
                     }
                 } else if (c.y < player.y + player.height) {
@@ -278,14 +279,13 @@
                         player.y = c.y - player.height;
                     }
                 }
-            }
-            if (c.y < player.y + PLAYER_SIZE - 6 && c.y + c.height > player.y + 6) {
+            } else if (c.y < player.y + PLAYER_SIZE && c.y + c.height > player.y + 12) {
                 if (c.x < player.x) {
-                    if (c.x + c.width >= player.x) {
+                    if (c.x + c.width >= player.x + 7) {
                         on = true;
                         back = c.type !== TOGGLE_SWITCH;
                     }
-                } else if (c.x < player.x + player.width) {
+                } else if (c.x < player.x + player.width - 7) {
                     front = c.type !== TOGGLE_SWITCH;
                     on = true;
                 }
@@ -296,16 +296,20 @@
         });
         // Set wall collision
         if (player.y + player.height > HEIGHT - GROUND_HEIGHT || player.y < GROUND_HEIGHT) {
-            gameOver('ran into the wall and got caught.');
+            gameOver('ran into the trench and got caught.');
         }
 
         let curOnToggle = false;
         onType.forEach((type) => {
             switch (type) {
                 case SPIKE:
+                    gameOver('tripped and fell into a pit.');
+                    break;
                 case LASER:
+                    gameOver('got zapped by a laser.');
+                    break;
                 case DANGER:
-                    gameOver('got caught.');
+                    gameOver('ran straight into a missile and blew up.');
                     break;
                 case TOGGLE_SWITCH:
                     if (!onToggle) {
@@ -318,7 +322,7 @@
                     vx *= 0.9;
                     break;
                 case WIN:
-                    // do something?
+                    // do something? Liek change logo
                     gameOver('escaped!');
                     break;
                 default:
@@ -348,7 +352,7 @@
         } else if (vx < 0 && back) {
             vx = 0;
         }
-        // player.image.src = `img/${player.color}${Math.trunc(tick / 3) % 3 + 1}.png`;
+        player.image.src = `img/game/run${Math.trunc(tick / 3) % 3 + 1}.png`;
         player.update();
     }
 
@@ -460,7 +464,7 @@
         let waves = Math.trunc(Math.random() * 5) + 6;
         randomTerrain(waves * TILE_SIZE * 3, dist / 2);
         for (let i = 0; i < waves; i++) {
-            components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length + TILE_SIZE * 8, player.y, DANGER, updateMissile));
+            missile(WIDTH + length + TILE_SIZE * 8, player.y);
             length += TILE_SIZE * 5;
         }
         cd = length;
@@ -532,7 +536,7 @@
                     case 4:
                         if (seg % 5 === 0) {
                             if (Math.random() > 0.7) {
-                                components.push(new Component(TILE_SIZE, 24, "red", WIDTH + length, player.y, DANGER, updateMissile));
+                                missile(WIDTH + length, player.y);
                             }
                         }
                         break;
@@ -637,7 +641,7 @@
                 return offset === 5 && x > 2 && x < 17 ? SPIKE : EMPTY;
             case 3:
                 if (x % 8 === 2) {
-                    if (offset === 0) {
+                    if (offset === 1) {
                         return LASER_BASE;
                     }
                     return LASER;
@@ -653,7 +657,7 @@
                 return EMPTY;
             case 5:
                 if (x % 4 === 2) {
-                    if (offset === 0) {
+                    if (offset === 1) {
                         return LASER_BASE;
                     }
                     return LASER;
@@ -760,6 +764,10 @@
         return block;
     }
 
+    function missile(x, y) {
+        components.push(new Component(TILE_SIZE, TILE_SIZE, 'projectile', x, y, DANGER, updateMissile));
+    }
+
     function transcribe(shape, map, x, y) {
         if (shape.length + x > map.length || shape[0].length + y > map[0].length) {
             return;
@@ -784,28 +792,28 @@
             let c = col[i];
             switch (c) {
                 case SPIKE:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'red', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'pit', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case WALL:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'blue', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'block', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case LASER:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'orange', x, i * TILE_SIZE + GROUND_HEIGHT, c, offset));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'laser', x, i * TILE_SIZE + GROUND_HEIGHT, c, offset));
                     break;
                 case LASER_BASE:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'orange', x, i * TILE_SIZE + GROUND_HEIGHT, c, offset));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'laserbase', x, i * TILE_SIZE + GROUND_HEIGHT, c, offset));
                     break;
                 case TOGGLE_SWITCH:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'yellow', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'switch-a', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case TOGGLE_WALL_A:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'gray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'block-a', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case TOGGLE_WALL_B:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'lightgray', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'block-b', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
                 case WIN:
-                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'green', x, i * TILE_SIZE + GROUND_HEIGHT, c));
+                    components.push(new Component(TILE_SIZE, TILE_SIZE, 'win', x, i * TILE_SIZE + GROUND_HEIGHT, c));
                     break;
             }
         }

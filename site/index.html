@@ -5,15 +5,19 @@
 <head>
     <title>S.A.D. Center</title>
     <!-- Using Vue.js - be sure to check their docs! -->
+    <link rel="icon" type="image/ico" href="favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <script src="js/index.js"></script>
     <script src="js/nav.js"></script>
 </head>
 
 <body>
     <ul id="navbar">
-        <li id="logo"></li>
+        <li id="logo">
+            <a href="index.html"><img src="img/aacf-logo.ico" alt="logo" /></a>
+        </li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}

@@ -9,9 +9,8 @@ body {
     padding: 0;
     width: auto;
     font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
-    background-color: rgb(38, 43, 68);
+    background-color: #b3b3b3;
     min-width: 600px;
-    background-image: url("../img/brick.png");
 }
 
 
@@ -160,26 +159,42 @@ button:disabled {
     list-style: none;
 }
 
-#title {
-    font-size: 16pt;
-    justify-self: baseline;
-}
-
-#nav-name {
+#nav-name,
+#logo {
+    position: absolute;
     color: white;
     font-size: 16pt;
     font-weight: 400;
 }
 
+#logo {
+    left: 13%;
+}
+
+#nav-name {
+    right: 13%;
+}
+
+#logo img {
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
+}
+
+#title {
+    font-size: 16pt;
+    justify-self: baseline;
+}
+
 .nav-item {
-    padding: 0px 20px;
+    padding: 0px 40px;
     height: 70px;
     line-height: 70px;
     font-size: 12pt;
     font-weight: 300;
     text-align: center;
     text-decoration: none;
-    color: rgb(214, 161, 161);
+    color: #b3b3b3;
     transition: 0.3s;
     letter-spacing: 2px;
 }
@@ -189,7 +204,7 @@ button:disabled {
 }
 
 #navbar a:hover {
-    color: rgb(255, 234, 234);
+    color: white;
     font-size: 14pt;
 }
 
@@ -201,46 +216,11 @@ h1 {
 }
 
 #content {
-    margin: 50px auto;
+    margin: 0px auto;
     padding: 0px 10%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    background-image: url("../img/fp/fp-bg5.jpg");
-    background-size: 800px 350px;
-}
-
-.cell {
-    height: 200px;
-    margin: 10px -100px 140px 30px;
-}
-
-.cell h3 {
-    width: 200px;
-    color: white;
-    text-align: center;
-}
-
-#content a {
-    margin: 0px;
-    padding: 0px;
-    text-decoration: none;
-}
-
-.cell img {
-    width: auto;
-    position: relative;
-}
-
-img.face {
-    top: -15px;
-    height: 130px;
-    width: 130px;
-}
-
-img.bars {
-    left: -140px;
-    height: 150px;
 }
 
 .arrow:hover,
