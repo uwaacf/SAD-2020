@@ -13,20 +13,22 @@
 
 <body>
     <ul id="navbar">
+        <li id="logo"></li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}
             </li>
         </a>
+        <li id="name"></li>
     </ul>
     <section id="content">
-        <section id="images">
+        <section id="cell">
             <img id="bg" src="img/prison.jpg" alt="Prison Cell" />
             <div id="user-img">
                 <img id="face" v-bind:src=img>
             </div>
             <div id="msg-img">
-                <img id="messages-img" src="img/transparent.png" alt="Joyce" />
+                <img id="messages-img" src="img/transparent.png" title="Check notes" alt="messages" />
             </div>
         </section>
         <article id="description">

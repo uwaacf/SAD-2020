@@ -73,13 +73,15 @@
         let auth = await fetch('resources/passwords.json');
         let json = await auth.json();
         if (json[`${user}`] === `${pass}`) {
+            document.cookie = `name=${name};path=/`;
             document.cookie = `pass=${password};path=/`;
             document.cookie = `inits=${inits[name]};path=/`;
             id('submit').disabled = false;
             close();
+            addLoginInfo();
         } else {
-            console.log(`"${user}": "${pass}"`);
-            alert('Wrong password!');
+            // console.log(`"${user}": "${pass}"`);
+            id('error-message').innerText = 'Your Identifier is incorrect!';
             id('submit').disabled = false;
         }
         return false;
@@ -87,22 +89,6 @@
 
     function logout() {
         document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
     }
 
     Object.defineProperty(String.prototype, 'hashCode', {

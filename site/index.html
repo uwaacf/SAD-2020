@@ -13,12 +13,13 @@
 
 <body>
     <ul id="navbar">
-        <li id="title">{{ title }}</li>
+        <li id="logo"></li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}
             </li>
         </a>
+        <li id="nav-name">{{ message }}</li>
     </ul>
     <section id="content">
         <div class="cell" v-for="name in names">
@@ -33,9 +34,9 @@
         <img id="close" src="img/close.png" alt="close">
         <section id="intro" class="popup">
             <h1>S.A.D. Center</h1>
-            <p>Welcome to the Center for something something something. This prison block houses a particularly wild set of individuals - that is, the AACF criminals, where we hope to rehabilitate each and every one. Click on a cell to take a closer look.
-                Due to our distancing protocol, the prison guards haven't approached the cells in a while, but they look like they're all still there.</p>
-            <p>Now, you should have received an ID for your visit. Enter your name and ID, and we give you VIP access into one of the cells. If you're a guest, feel free to just close this popup and take look around.</p>
+            <p>Welcome to the Society-Abider Dissenter Center. This structure houses a particularly wild set of individuals&mdash;that is, the AACF sisters. We hope to recenter the repeat dissenters to be abiders of society once more. Click on a cell to
+                take a closer look. Due to our distancing protocol, the prison guards haven't approached the cells in a while, but everyone looks like they're still there.</p>
+            <p>Now, you should have received an ID for your visit. Enter your name and ID, and we will grant you VIP access into one of the cells. If you're a guest, feel free to just close this popup and take look around.</p>
             <form id="login">
                 <label for="uname"><b>Name</b></label>
                 <select id="options" name="uname" required>
@@ -48,6 +49,7 @@
 
                 <button id="submit" type="submit">Login</button>
             </form>
+            <p id="error-message"></p>
         </section>
     </div>
 </body>
