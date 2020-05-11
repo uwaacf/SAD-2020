@@ -52,7 +52,7 @@
         name = prisoner;
         title.name = prisoner;
         description.title = prisoner;
-        image.img = 'img/' + initials + '.png';
+        image.img = 'img/prisoner/' + initials + '.png';
         let info = await fetch('resources/sad_stories/' + initials + '.txt');
         let text = await info.text();
         description.info = text;
