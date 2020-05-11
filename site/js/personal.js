@@ -40,22 +40,37 @@
             }
         });
         let params = window.location.search;
-        params.replace('?', '').split('&').forEach((s) => {
-            let kv = s.split('=');
-            if (kv[0] === 'prisoner') {
-                initials = kv[1];
+        let seeNotes = false;
+        if (params) {
+            params.replace('?', '').split('&').forEach((s) => {
+                let kv = s.split('=');
+                if (kv[0] === 'prisoner') {
+                    initials = kv[1];
+                }
+            });
+        } else {
+            let inits = getCookie('inits');
+            if (inits) {
+                initials = inits;
             }
-        });
+            seeNotes = true;
+        }
         let names = await fetch('resources/names.json');
         let json = await names.json();
         prisoner = json[initials];
         name = prisoner;
         title.name = prisoner;
         description.title = prisoner;
+        if (!name) {
+            window.location.href = "index.html";
+        }
         image.img = 'img/prisoner/' + initials + '.png';
         let info = await fetch('resources/sad_stories/' + initials + '.txt');
         let text = await info.text();
         description.info = text;
+        if (seeNotes) {
+            getNotes();
+        }
     }
 
     /* Note stuff */
@@ -133,22 +148,6 @@
             }
         });
         notes.push({ 'name': name, paragraphs: lines });
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
     }
 
     Object.defineProperty(String.prototype, 'hashCode', {

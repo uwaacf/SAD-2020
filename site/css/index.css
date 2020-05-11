@@ -1,0 +1,39 @@
+body {
+    background-image: url("../img/fp/fp-bg5.jpg");
+    background-size: 800px 350px;
+    background-position: 0px 100px;
+}
+
+.cell {
+    height: 200px;
+    margin: 10px -100px 140px 30px;
+}
+
+.cell h3 {
+    width: 200px;
+    color: white;
+    text-align: center;
+}
+
+#content a {
+    margin: 0px;
+    padding: 0px;
+    font-size: 16pt;
+    text-decoration: none;
+}
+
+.cell img {
+    width: auto;
+    position: relative;
+}
+
+img.face {
+    top: -15px;
+    height: 130px;
+    width: 130px;
+}
+
+img.bars {
+    left: -140px;
+    height: 150px;
+}

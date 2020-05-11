@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap');
 @font-face {
     font-family: 'Octin Prison';
     src: url('octin-prison.ttf');
@@ -8,9 +9,8 @@ body {
     padding: 0;
     width: auto;
     font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
-    background-color: rgb(38, 43, 68);
+    background-color: #b3b3b3;
     min-width: 600px;
-    background-image: url("../img/brick.png");
 }
 
 
@@ -124,6 +124,11 @@ form button {
     width: 100%;
 }
 
+#error-message {
+    color: red;
+    margin: 0px;
+}
+
 button:disabled {
     background-color: gray;
 }
@@ -143,15 +148,37 @@ button:disabled {
 /* Navigation bar */
 
 #navbar {
+    font-family: 'Open Sans', sans-serif;
     margin: 0px;
     padding: 0px;
     width: 100%;
-    background-color: white;
+    background-color: rgb(36, 36, 36);
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     list-style: none;
+}
+
+#nav-name,
+#logo {
+    position: absolute;
+    color: white;
+    font-size: 16pt;
+    font-weight: 400;
+}
+
+#logo {
+    left: 13%;
+}
+
+#nav-name {
+    right: 13%;
+}
+
+#logo img {
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
 }
 
 #title {
@@ -160,15 +187,16 @@ button:disabled {
 }
 
 .nav-item {
-    padding: 0px 20px;
+    padding: 0px 40px;
     height: 70px;
     line-height: 70px;
-    font-size: 16pt;
-    font-weight: 600;
+    font-size: 12pt;
+    font-weight: 300;
     text-align: center;
     text-decoration: none;
-    color: rgb(128, 128, 253);
+    color: #b3b3b3;
     transition: 0.3s;
+    letter-spacing: 2px;
 }
 
 .nav-item::selection {
@@ -176,7 +204,8 @@ button:disabled {
 }
 
 #navbar a:hover {
-    color: rgb(218, 218, 255);
+    color: white;
+    font-size: 14pt;
 }
 
 
@@ -187,45 +216,11 @@ h1 {
 }
 
 #content {
-    margin: 50px auto;
+    margin: 0px auto;
     padding: 0px 10%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    background-image: url("../img/fp/fp-bg5.jpg");
-    background-size: 800px 350px;
-}
-
-.cell {
-    height: 200px;
-    margin: 10px -100px 140px 30px;
-}
-
-.cell h3 {
-    width: 200px;
-    color: white;
-    text-align: center;
-}
-
-#content a {
-    margin: 0px;
-    padding: 0px;
-    text-decoration: none;
-}
-
-.cell img {
-    width: auto;
-    position: relative;
-}
-
-img.face {
-    top: -15px;
-    height: 130px;
-}
-
-img.bars {
-    left: -140px;
-    height: 150px;
 }
 
 .arrow:hover,

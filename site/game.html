@@ -5,6 +5,7 @@
     <title>SAD</title>
     <!-- Using Vue.js - be sure to check their docs! -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="icon" type="image/ico" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/game.css">
     <script src="js/nav.js"></script>
@@ -13,24 +14,29 @@
 
 <body>
     <ul id="navbar">
-        <li id="title">{{ title }}</li>
+        <li id="logo">
+            <a href="index.html"><img src="img/aacf-logo.ico" alt="logo" /></a>
+        </li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}
             </li>
         </a>
+        <li id="nav-name">{{ message }}</li>
     </ul>
     <section id="content">
         <article id="intructions">
-            <h1>Instructions</h1>
-            <p>The goal is to escape the jail. Click or press space to jump. Press and hold to slow down.</p>
+            <h1>Controls</h1>
+            <p>The goal is to escape the perilous jail. The character will run diagonally by itself, so avoid any pits, missiles, and lasers.</p>
+            <p>Click/Any Key - change vertical direction</p>
+            <p>Hold Click/Any Key - slow down</p>
         </article>
         <article id="game">
             <canvas id="game-view">
             </canvas>
             <div id="menu-view">
                 <h1 id="message">Jailbreak</h1>
-                <p id="gameover" class="hidden">You traveled {{ distance }} meters before {{ death }}</p>
+                <p id="gameover" class="hidden">After running {{ distance }} meters, you {{ death }}</p>
                 <p>Click to start a new game.</p>
             </div>
         </article>

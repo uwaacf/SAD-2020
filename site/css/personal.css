@@ -7,14 +7,14 @@
     background-image: url("../img/transparent.png");
 }
 
-#images {
+#cell {
     position: relative;
     top: 0;
     left: 0;
     margin-bottom: 50px;
 }
 
-#images img {
+#cell img {
     margin: 0px 50px;
 }
 
@@ -38,6 +38,10 @@
 #messages-img {
     width: 320px;
     height: 220px;
+}
+
+#messages-img:hover {
+    cursor: pointer;
 }
 
 #description {

@@ -5,6 +5,7 @@
     <title>{{ name }}</title>
     <!-- Using Vue.js - be sure to check their docs! -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="icon" type="image/ico" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/personal.css">
     <script src="js/personal.js"></script>
@@ -13,20 +14,24 @@
 
 <body>
     <ul id="navbar">
+        <li id="logo">
+            <a href="index.html"><img src="img/aacf-logo.ico" alt="logo" /></a>
+        </li>
         <a class="nav-item" v-for="item in items" v-bind:href=item.link>
             <li>
                 {{ item.text }}
             </li>
         </a>
+        <li id="nav-name">{{ message }}</li>
     </ul>
     <section id="content">
-        <section id="images">
+        <section id="cell">
             <img id="bg" src="img/prison.jpg" alt="Prison Cell" />
             <div id="user-img">
                 <img id="face" v-bind:src=img>
             </div>
             <div id="msg-img">
-                <img id="messages-img" src="img/transparent.png" alt="Joyce" />
+                <img id="messages-img" src="img/transparent.png" title="Check notes" alt="messages" />
             </div>
         </section>
         <article id="description">
