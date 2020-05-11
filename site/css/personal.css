@@ -122,3 +122,19 @@
     font-size: 14pt;
     margin-bottom: -350px;
 }
+
+#messages ::-webkit-scrollbar {
+    width: 10px;
+}
+
+#messages ::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+#messages ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+#messages ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
