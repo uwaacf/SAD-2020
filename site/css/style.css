@@ -11,7 +11,7 @@ body {
     font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
     background-color: rgb(38, 43, 68);
     min-width: 600px;
-    /* background-image: url("../img/brick.png"); */
+    background-image: url("../img/brick.png");
 }
 
 
@@ -206,7 +206,8 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    background-image: url("../img/cell-bg.png");
+    background-image: url("../img/fp/fp-bg5.jpg");
+    background-size: 800px 350px;
 }
 
 .cell {
@@ -232,7 +233,7 @@ h1 {
 }
 
 img.face {
-    top: -10px;
+    top: -15px;
     height: 130px;
     width: 130px;
 }

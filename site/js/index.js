@@ -37,7 +37,7 @@
             cells.names.push({
                 name: json[initials],
                 link: `personal.html?prisoner=${initials}`,
-                img: `img/${initials}.png`
+                img: `img/prisoner/${initials}.png`
             });
         }
         cells.names = shuffle(cells.names);
