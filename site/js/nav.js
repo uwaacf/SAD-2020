@@ -29,8 +29,7 @@ function addLoginInfo() {
         nav.items.push({ text: "Log In", link: "index.html" });
     } else {
         nav.items.push({ text: "Notes", link: "personal.html" });
-        nav.items.push({ text: "Log Out", link: "index.html?logout" });
-        nav.message = `Welcome, ${name}`;
+        nav.items.push({ text: `Log Out (${name})`, link: "index.html?logout" });
     }
 }
 

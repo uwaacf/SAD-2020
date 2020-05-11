@@ -28,6 +28,7 @@
     let onToggle;
     let interval;
     let bg;
+    let arrow;
     // < 0 types are dangerous
     let LASER = -4; // tile -> EMPTY/DANGER
     let LASER_BASE = -3; // tile -> EMPTY/DANGER
@@ -62,6 +63,8 @@
         });
         bg = new Image();
         bg.src = 'img/game/gfloor.png';
+        arrow = new Image();
+        arrow.src = 'img/game/arrow.png';
     }
 
     function slowDown() {
@@ -245,10 +248,13 @@
     }
 
     function drawUI() {
-        ctx.strokeStyle = '#000';
-        ctx.font = '36px Arial';
-        ctx.strokeText(`${Math.round(dist) / 10}m traveled`, 100, 100);
-        ctx.strokeText(`${Math.round(dist - tick * Math.log(tick) / 1.9) / 10}m away`, 100, 200);
+        ctx.font = '24px Arial';
+        ctx.fillStyle = '#fff';
+        ctx.fillText(`${Math.round(dist / 10)}m`, 450, 25);
+        ctx.fillStyle = '#ff0000';
+        ctx.font = '18px Consolas';
+        ctx.fillText(`${Math.round(dist / 10 - tick * Math.log(tick) / 19)}m`, 30, 400);
+        ctx.drawImage(arrow, 5, 387);
     }
 
     function updatePlayer() {

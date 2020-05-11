@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=New+Rocker&display=swap');
 body {
     background-image: url("../img/fp/fp-bg5.jpg");
     background-size: 800px 350px;
@@ -11,8 +12,10 @@ body {
 
 .cell h3 {
     width: 200px;
-    color: white;
+    color: #333;
     text-align: center;
+    font-family: 'Octin Prison', cursive;
+    font-size: 18pt;
 }
 
 #content a {

@@ -95,8 +95,14 @@
             setTimeout(() => jump(index), 100);
         } else {
             cur = index;
-            vnote.paragraphs = notes[cur].paragraphs;
-            vnote.name = notes[cur].name;
+            let next = notes[cur];
+            if (next.text) {
+                vnote.paragraphs = notes[cur].paragraphs;
+            } else {
+                vnote.img = next.source;
+            }
+            vnote.text = next.text;
+            vnote.name = next.name;
             page.num = `${cur + 1} / ${notes.length}`;
         }
     }
@@ -116,6 +122,7 @@
                         el: '#note',
                         data: {
                             name: '',
+                            text: true,
                             paragraphs: ['reading message...']
                         }
                     });
@@ -138,16 +145,23 @@
         }
     }
 
-    async function fetchNote(name) {
-        let response = await fetch(`resources/notes/${initials}_${name}.txt`);
-        let text = await response.text();
-        let lines = [];
-        text.split(/[\r\n]+/).forEach((s) => {
-            if (s !== '') {
-                lines.push(s);
-            }
-        });
-        notes.push({ 'name': name, paragraphs: lines });
+    async function fetchNote(file) {
+        let path = `resources/notes/${initials}/${file}`;
+        let name = file.split('.')[0];
+        if (file.endsWith('.txt')) {
+            let response = await fetch(path);
+            let text = await response.text();
+            let lines = [];
+            text.split(/[\r\n]+/).forEach((s) => {
+                if (s !== '') {
+                    lines.push(s);
+                }
+            });
+            notes.push({ 'name': name, text: true, paragraphs: lines });
+        } else {
+            notes.push({ 'name': name, text: false, source: path })
+        }
+        page.num = `${cur + 1} / ${notes.length}`;
     }
 
     Object.defineProperty(String.prototype, 'hashCode', {

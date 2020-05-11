@@ -7,7 +7,6 @@
 body {
     margin: 0;
     padding: 0;
-    width: auto;
     font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
     background-color: #b3b3b3;
     min-width: 600px;
@@ -33,6 +32,7 @@ body {
 }
 
 .popup {
+    font-family: 'Open Sans', sans-serif;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -45,11 +45,10 @@ body {
     justify-content: space-between;
     width: 500px;
     min-width: 500px;
-    padding: 50px 80px 30px 80px;
+    padding: 70px 80px 30px 80px;
     height: 500px;
     color: #222;
     background-color: white;
-    font-family: 'Nanum Pen Script', cursive;
     overflow-y: auto;
 }
 
@@ -60,7 +59,7 @@ body {
 
 .popup p {
     margin: 1em 0em 0em 0em;
-    font-size: 18pt;
+    font-size: 14pt;
 }
 
 .popup ::-webkit-scrollbar {
@@ -152,14 +151,14 @@ button:disabled {
     margin: 0px;
     padding: 0px;
     width: 100%;
-    background-color: rgb(36, 36, 36);
+    min-width: 600px;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
 }
 
-#nav-name,
 #logo {
     position: absolute;
     color: white;
@@ -169,10 +168,6 @@ button:disabled {
 
 #logo {
     left: 13%;
-}
-
-#nav-name {
-    right: 13%;
 }
 
 #logo img {

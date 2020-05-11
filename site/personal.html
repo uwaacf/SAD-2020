@@ -22,11 +22,10 @@
                 {{ item.text }}
             </li>
         </a>
-        <li id="nav-name">{{ message }}</li>
     </ul>
     <section id="content">
         <section id="cell">
-            <img id="bg" src="img/prison.jpg" alt="Prison Cell" />
+            <img id="bg" src="img/prison.png" alt="Prison Cell" />
             <div id="user-img">
                 <img id="face" v-bind:src=img>
             </div>
@@ -43,7 +42,12 @@
         <img id="close" src="img/close.png" alt="close">
         <section id="messages">
             <div id="note" class="popup">
-                <p v-for="paragraph in paragraphs">{{ paragraph }}</p>
+                <div v-if="text">
+                    <p v-for="paragraph in paragraphs">{{ paragraph }}</p>
+                </div>
+                <a v-else v-bind:href=img>
+                    <img v-bind:src=img />
+                </a>
                 <h1>- {{ name }}</h1>
             </div>
         </section>
