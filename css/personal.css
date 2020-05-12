@@ -113,6 +113,27 @@
     filter: brightness(50%);
 }
 
+#link {
+    position: fixed;
+    width: 400px;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -380px;
+}
+
+#link button {
+    background-color: rgb(101, 101, 255);
+    border: none;
+    width: 400px;
+    padding: 15px 0px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
 #pagenum {
     position: fixed;
     width: 100%;
