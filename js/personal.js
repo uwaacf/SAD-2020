@@ -2,7 +2,6 @@
     "use strict";
 
     let id = x => document.getElementById(x);
-    let qs = x => document.querySelector(x);
     let notes = [];
     let vnote;
     let page;
@@ -142,7 +141,7 @@
                     let links = await fetch('resources/links.json');
                     let jsonlinks = await links.json();
                     link.link = jsonlinks[initials];
-                    let response = await fetch('resources/notes/notes.json');
+                    let response = await fetch('resources/notes.json');
                     let json = await response.json();
                     json[initials].forEach(s => fetchNote(s));
                 }
@@ -154,21 +153,14 @@
         }
     }
 
-    async function fetchNote(file) {
-        let path = `resources/notes/${initials}/${file}`;
-        let name = file.split('.')[0];
-        if (file.endsWith('.txt')) {
-            let response = await fetch(path);
-            let text = await response.text();
-            let lines = [];
-            text.split(/[\r\n]+/).forEach((s) => {
-                if (s !== '') {
-                    lines.push(s);
-                }
-            });
-            notes.push({ 'name': name, text: true, paragraphs: lines });
+    async function fetchNote(note) {
+        let name = note['name'];
+        let msg = note['message'];
+        if (name !== 'img') {
+            notes.push({ 'name': name, text: true, paragraphs: msg });
         } else {
-            notes.push({ 'name': name, text: false, source: path })
+            name = msg.split('.')[0];
+            notes.push({ 'name': name, text: false, source: `img/notes/${msg}` });
         }
         page.num = `${cur + 1} / ${notes.length}`;
     }
