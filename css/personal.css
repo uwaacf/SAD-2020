@@ -1,43 +1,55 @@
-@import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script|Special+Elite&display=swap');
 #content {
+    align-items: center;
     pointer-events: auto;
-    width: 1000px;
     z-index: 0;
-    font-family: 'Octin Prison', cursive;
     background-image: url("../img/transparent.png");
+    margin-top: 100px;
+}
+
+#note img {
+    width: 100%;
+    height: auto;
 }
 
 #cell {
     position: relative;
     top: 0;
     left: 0;
+    width: 100%;
+    max-width: 1000px;
     margin-bottom: 50px;
 }
 
+#bg {
+    width: 100%;
+}
+
 #cell img {
-    margin: 0px 50px;
+    margin: 0px;
 }
 
 #user-img {
     position: absolute;
     top: 48%;
-    left: 11.75%;
+    left: 13%;
 }
 
 #msg-img {
     position: absolute;
     top: 75%;
-    left: 69%;
+    left: 73%;
 }
 
 #face {
-    width: 300px;
-    height: 300px;
+    width: 14vw;
+    max-width: 176px;
 }
 
 #messages-img {
-    width: 320px;
-    height: 220px;
+    width: 16vw;
+    max-width: 200px;
+    height: 11vw;
+    max-height: 140px;
 }
 
 #messages-img:hover {
@@ -53,9 +65,13 @@
     font-size: 11pt;
     line-height: 1.5em;
     letter-spacing: 1px;
+    margin: 0px 30px;
+    border: 8px solid black;
+    border-radius: 8px;
 }
 
 #description h1 {
+    font-family: 'Octin Prison', cursive;
     margin-top: 0px;
     font-size: 16pt;
     text-align: center;
@@ -105,4 +121,20 @@
     bottom: 50%;
     font-size: 14pt;
     margin-bottom: -350px;
+}
+
+#messages ::-webkit-scrollbar {
+    width: 10px;
+}
+
+#messages ::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+#messages ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+#messages ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

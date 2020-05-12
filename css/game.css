@@ -5,9 +5,14 @@
 }
 
 article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     min-width: 1024px;
-    margin-top: 20px;
+    margin: 20px 0px;
     background-color: white;
+    border: 10px solid #222;
 }
 
 article p {
