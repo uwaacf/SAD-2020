@@ -132,7 +132,16 @@
                             num: '? / ?'
                         }
                     });
+                    let link = new Vue({
+                        el: '#link',
+                        data: {
+                            link: ''
+                        }
+                    });
                     notes = [];
+                    let links = await fetch('resources/links.json');
+                    let jsonlinks = await links.json();
+                    link.link = jsonlinks[initials];
                     let response = await fetch('resources/notes/notes.json');
                     let json = await response.json();
                     json[initials].forEach(s => fetchNote(s));

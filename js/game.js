@@ -27,6 +27,7 @@
     let toggle;
     let onToggle;
     let interval;
+    let end, endless;
     let bg;
     let arrow;
     // < 0 types are dangerous
@@ -65,6 +66,15 @@
         bg.src = 'img/game/gfloor.png';
         arrow = new Image();
         arrow.src = 'img/game/arrow.png';
+        let slider = id('dist');
+        slider.oninput = function() {
+            let dist = slider.value;
+            if (dist == 5001) {
+                id('output').innerText = 'endless';
+            } else {
+                id('output').innerText = `a bit over ${dist}m`;
+            }
+        }
     }
 
     function slowDown() {
@@ -83,13 +93,17 @@
         id('gameover').classList.remove('hidden');
         interval = setInterval(updateGameArea, 20);
         tick = 0;
-        dist = 50;
+        dist = 20;
         player.y = HEIGHT / 2;
         components = [];
         cd = 30;
         vy = 3;
         vx = 4;
         toggle = false;
+        end = id('dist').value;
+        endless = (end == 5001);
+        console.log(endless);
+        console.log(end);
     }
 
     class Component {
@@ -194,7 +208,7 @@
             missile(WIDTH + length, player.y);
         }
         if (cd <= 0) {
-            if (dist > 30000) {
+            if (dist > end * 10 && !endless) {
                 pattern5();
             } else {
                 let random = Math.trunc(Math.random() * 6);
@@ -269,7 +283,7 @@
                 return;
             }
             let on = false;
-            if (c.x < x + PLAYER_SIZE - 12 && c.x + c.width > x + 12) {
+            if (c.x < x + PLAYER_SIZE - 14 && c.x + c.width > x + 14) {
                 if (c.y < player.y) {
                     if (c.y + c.height >= player.y + 6) {
                         on = true;
