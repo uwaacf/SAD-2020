@@ -62,7 +62,7 @@
         title.name = prisoner;
         description.title = prisoner;
         if (!name) {
-            window.location.href = "index.html";
+            window.location.href = "index";
         }
         image.img = 'img/prisoner/' + initials + '.png';
         let info = await fetch('resources/sad_stories/' + initials + '.txt');

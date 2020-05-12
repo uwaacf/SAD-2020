@@ -10,10 +10,17 @@ let nav;
             el: '#navbar',
             data: {
                 items: [
-                    { text: "Home", link: "index.html" },
-                    { text: "Game", link: "game.html" },
+                    { text: "Home", link: "index" },
+                    { text: "Game", link: "game" },
                 ],
                 message: ''
+            }
+        });
+        let params = window.location.search;
+        params.replace('?', '').split('&').forEach((s) => {
+            let kv = s.split('=');
+            if (kv[0] === 'logout') {
+                logout();
             }
         });
         addLoginInfo();
@@ -22,14 +29,18 @@ let nav;
     window.addEventListener('load', init);
 })();
 
+function logout() {
+    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+}
+
 function addLoginInfo() {
     let name = getCookie('name');
     nav.items.splice(2);
     if (!name) {
-        nav.items.push({ text: "Log In", link: "index.html" });
+        nav.items.push({ text: "Log In", link: "index" });
     } else {
-        nav.items.push({ text: "Notes", link: "personal.html" });
-        nav.items.push({ text: `Log Out (${name})`, link: "index.html?logout" });
+        nav.items.push({ text: "Notes", link: "personal" });
+        nav.items.push({ text: `Log Out (${name})`, link: "?logout" });
     }
 }
 
