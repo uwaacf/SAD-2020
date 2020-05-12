@@ -46,6 +46,7 @@ article p {
 #menu-view p {
     font-size: 24pt;
     font-family: 'Courier New', Courier, monospace;
+    padding: 0px 100px;
 }
 
 #menu-view.hidden {

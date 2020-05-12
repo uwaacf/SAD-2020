@@ -283,7 +283,7 @@
                 return;
             }
             let on = false;
-            if (c.x < x + PLAYER_SIZE - 12 && c.x + c.width > x + 12) {
+            if (c.x < x + PLAYER_SIZE - 14 && c.x + c.width > x + 14) {
                 if (c.y < player.y) {
                     if (c.y + c.height >= player.y + 6) {
                         on = true;
