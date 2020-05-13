@@ -33,6 +33,9 @@
     }, {
         "name": "SK",
         "message": ["wow look at you popular g0rl!! so many notes!!", "i\u2019m so happy to see you fill the shoes of the people you looked up to before. not that i regret taking more time to focus on academics, but if i could change things, it would have been to visit AACF more often and see you be the great leader you are!! i can\u2019t believe you\u2019re doing grad school now too. wow. so excite!! i would love to catch up w you sometime. preferably in real life. if you\u2019re sticking around, that would be convenient and s0 very l0vely~~ but if you\u2019re going away lol rip. ugh i\u2019ll settle for a call sometime too tho. definitely miss meesum runs and bake nights with u! :( and finally, please continue to be the amazing Godly woman you are!! people really look to you. people really love you."]
+    }, {
+        "name": "img",
+        "message": "The Cheese Federation.jpg"
     }],
     "vs": [{
         "name": "\u54e5\u54e5",
@@ -49,6 +52,9 @@
     }, {
         "name": "Marques Mar",
         "message": ["V!", "You were one of the very first people I met at UW! It has been a great two years of getting to know each other more. Thanks for being open to talk and being a fun person to be around. I hope that you have a great rest of your year at Zoom University! "]
+    }, {
+        "name": "img",
+        "message": "KPOP King.jpg"
     }],
     "sh": [{
         "name": "Lewis",
@@ -56,6 +62,9 @@
     }, {
         "name": "Jed",
         "message": ["Hi Susan!", "I'm sorry to hear about your arrest. Are you doing well?", "First off, I wanted to thank you for coming to my small group. It's encouraging to me that you make an effort to show up. I have lots of fun chatting with you, whether it be about yourself, homework struggles, or not knowing your own parents LOL.", "Though school is already over for me, I hope for the best for you!", "See you around!"]
+    }, {
+        "name": "img",
+        "message": "KPOP King.jpg"
     }],
     "mt": [{
         "name": "Josh",
@@ -81,6 +90,9 @@
     }, {
         "name": "George",
         "message": ["Hi Mixhelle!", "Thanks for doing so much for AACF. Can\u2019t imagine what it\u2019s going to be like without you at the helm anymore haha --doesn\u2019t mean that it won\u2019t be as good, it just means that the work you do isn\u2019t replaceable. I know that it seems like I\u2019m always bothered by your antics, but I\u2019m really gonna miss having you nagging me constantly. We have opposite sleep schedules, but the few times we\u2019ve managed to hang out I\u2019ve had a lot of fun. Sometimes I really can\u2019t tell if you\u2019re truly having fun or just pretending like you are, but I think I\u2019ve learned enough about you to tell that you love what you do and you\u2019re bold enough to put yourself out there for the sake of others. Thanks for always messaging me from time to time and trying to cheer me up. It\u2019ll probably be a long time before we see each other again, but this won\u2019t be the last time I get to talk to you. Haha maybe next time I\u2019ll even have some sense of fashion. Anyway, see you on that food tour."]
+    }, {
+        "name": "img",
+        "message": "Hello Kitty Kingdom.jpg"
     }],
     "kx": [{
         "name": "Marques Mar",
@@ -97,6 +109,9 @@
     }, {
         "name": "see you soon?",
         "message": ["Hi,", "I believe you may have been wrongly incarcerated, but man, that was pretty heartless of you.", "Miss you lots! Come back soon so we can play games and chat together. Whenever your internet connection lags out...um, the call drops. I know you're anxious and stressed and everything and I admire the struggle you're making. You count yourself short a lot of the times, but you should feel empowered to take your chances. If you fail, you can be sure that I'll be there to support you.", "Love you!"]
+    }, {
+        "name": "img",
+        "message": "Hahaha.png"
     }],
     "sc": [{
         "name": "Zach C",
@@ -110,6 +125,9 @@
     }, {
         "name": "George",
         "message": ["Saaaammiiiiiiiiii,", "We barely hang out, but we should. Sometime. Some year. At some donut shop. Anyway, thanks for always being willing to help me, especially for info apps haha (it\u2019s not your fault, don\u2019t worry about it). I\u2019m gonna miss seeing you at AACF or whenever I crash your apartment (sorry for always crashing your apartment), and I wish we got to spend more time exploring donut shops. Anyway, if things go back to normal soon let\u2019s go get donuts somewhere around here. And when I go back to Seattle you better have some answers for where the best donuts are.", "Cheers!"]
+    }, {
+        "name": "img",
+        "message": "Yuri.jpg"
     }],
     "ak": [{
         "name": "Josh",
@@ -126,14 +144,23 @@
     }, {
         "name": "George",
         "message": ["Hi Aneeq,", "It\u2019s so weird how we can not talk for like weeks, and then when we hang out we can still be best friends for the day. You always have something new to bring up, and I appreciate that you\u2019re always willing to share it with me. I wish I could give you better advice, but I feel like we just have two different takes on how to approach the world. And although I super judge you for that, I think that deep down we have a lot of similar values. When it comes down to it, I feel like a lot of people tell you that the choices that you make are wrong and that you should do things differently, but I think that there\u2019s something to take from your side of things and I appreciate the advice you give me. If I happen to be studying in Cali next year, come visit and I\u2019ll take you around. It\u2019s the least I can do in return for always having you ferry me all over the place in Seattle. Oh and on that note, thanks for letting me drive your car lol. Cheers, good luck, and live without regrets. "]
+    }, {
+        "name": "img",
+        "message": "Uniquely.jpg"
     }],
     "ks": [{
         "name": "Jed",
         "message": ["Hello!", "I haven't seemed to talk to you much outside of LTC, but hey, I haven't forgotten that either! You were pretty quick on your feet for improv haha.", "I think it's really awesome that you come out to AACF for these events. Thanks for that, and I hope you're doing well at UW Bothell!"]
+    }, {
+        "name": "img",
+        "message": "Keeps the doctor away.jpg"
     }],
     "df": [{
         "name": "Jun",
         "message": ["Hey Danielle! Hope you're doing well in this quarantine season. I just want you to know that we appreciate you coming to AACF! Probably the most memorable thing was when we were in Oasis playing Egyptian something card game. I apologize for being so loud and aggressive, but I hope it wasn\u2019t a bad time haha. Stay healthy! Stay away from COVID cuz I heard it\u2019s pretty bad if you catch it. Hope to see you more often next year when school (hopefully?) is in-person again."]
+    }, {
+        "name": "img",
+        "message": "Dreamworks.jpg"
     }],
     "jl": [{
         "name": "Zach C",
@@ -159,6 +186,9 @@
     }, {
         "name": "George",
         "message": ["Hi Joce,", "You\u2019ll probably never stop misspelling my name lol but nicknames are, at the very least, an indication that you care about those people. So thanks, I guess? Anyway, it\u2019s been super encouraging watching you grow up from the beginning of last year until now. I know that you definitely have a heart for people, but it\u2019s still super inspiring to see everything that you do for them. I know some of us felt like your sudden change would just be a short phase, but you\u2019ve proved us wrong. You\u2019ve done so much more than anyone could have asked for, and still you desire to do more. Thanks for being my favorite small group leader and all-around good friend. I\u2019m going to miss your signature Joyce vibes (uhh I don\u2019t know how to generalize it but ask anyone and they probably know exactly what I\u2019m talking about), so let\u2019s find some time to hang out when you\u2019re in the bay. "]
+    }, {
+        "name": "img",
+        "message": "Bubble Tea Friends.jpg"
     }],
     "cr": [{
         "name": "Bill",
@@ -175,6 +205,9 @@
     }, {
         "name": "SK",
         "message": ["u h0e,", "As a very integral part of my AACF experience, I must say that I have missed you. Harassing you is always the highlight of my day :\u2019) ah, the good ol\u2019 days\u2026", "But really, you are a big reason why as to why I miss AACF and I shall do better to see everyone next year 8) esp you!!!", "Thanks for playing along with me and being a good sport and always catching me when I spontaneously (trust) fall. Legend.", "C u soon!"]
+    }, {
+        "name": "img",
+        "message": "Circus.jpg"
     }],
     "tl": [{
         "name": "Josh",
@@ -188,6 +221,9 @@
     }, {
         "name": "Evan",
         "message": ["Tiph,", "I remember when we first met at retreat, I pretty much only talked to you because of how awkward our table was. I\u2019m so glad I did though. We made some pretty stupid memories over the quarter Like staying up until 3 am watching your Kpop group videos (that you unironically enjoy) and watching dumb videos when we should have been studying. Honestly I\u2019m half surprised you even showed up most of the time because you barely came to any of the events and would always come to alder like 5 hours after I texted you. But I digress. You\u2019re a good friend and I\u2019m happy we ended meeting even though I didn\u2019t know you existed all of fall quarter. Also, congrats on making it into info!"]
+    }, {
+        "name": "img",
+        "message": "Willy Wonka Factory.jpg"
     }],
     "aw": [{
         "name": "Bill Wang",
@@ -204,6 +240,9 @@
     }, {
         "name": "Jed",
         "message": ["Hello.", "I can't believe you don't pronounce salmon right. It must be related to why you laughed at Death Valley smh.", "I'm glad you're going to be on core next year. I believe you have many ideas and inspirations that don't see the light of day because you aren't the type of person to force your opinion (other than for salmon). Being on core is not just a responsibility but an enabler as well. I think your eye for design and heart for others will service you well in your position. Keep up the good work, just respect the Valley alright?", "Also, let your thoughts be heard, because I get the feeling you have some interesting perspectives. Anyways, you're a fun person. Good luck and persevere dude."]
+    }, {
+        "name": "img",
+        "message": "The Plush Family.jpg"
     }],
     "lm": [{
         "name": "Bill ",
@@ -214,6 +253,9 @@
     }, {
         "name": "Phil",
         "message": ["Hola Laurie,", "Sorry I wasn\u2019t able to join the volleyball team at all but honestly, I probably wouldn\u2019t have made the cut lol I guess it wasn\u2019t meant to be haha Anywayyy I hope you\u2019ve been good! It\u2019s been a fat minute since we hung out! I honestly really miss eating at Kong with you guys and I\u2019ll come visit as soon as possible just to eat at Kong again (and maybe have a tea party lol). But I guess you live in Bothell so maybe we can just catch up at Sharetea hopefully soon maybe maybe not idk lol. All in all, you\u2019re a super cool, hilarious, fun, and EPIC person! I\u2019m lucky to call you a friend and so is everyone else. Since I wans\u2019t able to have a senior trip or graduate this year maybe it actually a bad idea to be a 6th year and graduate with your class haha. Regardless, (<- that\u2019s a big fancy word you should give me props) I really hope you\u2019re doing good and don\u2019t forget to stay healthy, stay happy, and stay you sis!"]
+    }, {
+        "name": "img",
+        "message": "Shoyo Hinata.jpeg"
     }],
     "vz": [{
         "name": "Matt",
@@ -227,6 +269,9 @@
     }, {
         "name": "Evan",
         "message": ["Vivia,", "I\u2019m not going to lie, every time we hang out I swear something crazy is going to happen. Those times are all very memorable though and definitely something I won\u2019t forget. Hopefully you\u2019re still working on your basketball skills and don\u2019t haze the young freshmen too much in your sorority. Next year it\u2019s probably going to get even crazier too. I\u2019m not sure I\u2019m ready for it."]
+    }, {
+        "name": "img",
+        "message": "Workers Union.jpg"
     }],
     "jn": [{
         "name": "Bill",
@@ -240,6 +285,9 @@
     }, {
         "name": "George",
         "message": ["Hi Jacinda!", "Haven\u2019t seen you around too much lately but I know you\u2019re a busy bee with all that\u2019s going on in info and beyond. Thanks for still stepping up to be a small group leader in spite of that, I know it\u2019s probably not what you had in mind to do but I hope that it has been a fun learning experience for you. Sorry for dragging you into taking random classes like nutrition and music, but I appreciate that you\u2019re always willing to show up to class with me and take those evil quizzes together. --Additional sorry for always crashing your dorm, I hope it wasn\u2019t too much of a bother. Anyway, even if I won\u2019t be at AACF next year, I think that everyone else will enjoy having you around, so please show up whenever you can find the time (no I\u2019m not duty bound by core to tell you to go to large groups and in-reach events, but you should goooo). Nevertheless, good luck this summer + keep me posted about it and don\u2019t be afraid to reach out if you ever need anything."]
+    }, {
+        "name": "img",
+        "message": "Your Students.jpg"
     }],
     "al": [{
         "name": "Daniel",
@@ -247,6 +295,9 @@
     }, {
         "name": "Ryan",
         "message": ["Hi Angie, it\u2019s that time of the year LOL. I hope you understand by now how much I appreciate you. It\u2019s been so cool to see you gradually become a stronger individual and a person that knows herself more with time. I know this year has really been a wild ride for you and that you may be tired of associating yourself with these fellowships. Follow your gut and discuss it with us, Angie. ", "\tAlso, I just want to let you know that one of my favorite memories with you was when we were walking to Candice\u2019s graduation and we were talking about life. That was a really chill time for me and I was really happy. Thank you for something so ordinary. I know you\u2019ll figure out life one step at a time, even when I can\u2019t walk life next to you for the remainder of your college years. ", "P.S. If you really meant it when you said one of the only reasons you\u2019d willingly come back to Seattle is to come to see me, then I\u2019m gonna really try to come back up here. Take care of yourself, Angela."]
+    }, {
+        "name": "img",
+        "message": "The Doctor.jpg"
     }],
     "ax": [{
         "name": "Matt",
@@ -263,6 +314,9 @@
     }, {
         "name": "Jed",
         "message": ["HELLO.", "Thanks for taking care of \"bruh\" Kath and going to small group most of the time. Become a CS genius and help out the boys, alright? I'm glad you have a blunt attitude because that makes you a simple, straightforward person. And that's a good thing, most of the time. Also quite impressed by your art of assimilation into the AACF wilds. Also you're great at PUBG I hear, so good work. Stay crazy.", "I'll see you again some time when I visit Kath."]
+    }, {
+        "name": "img",
+        "message": "A Chicken.jpg"
     }],
     "ab": [{
         "name": "Matt",
@@ -270,10 +324,16 @@
     }, {
         "name": "Phil",
         "message": ["Hi hi Amy!", "I hope you\u2019re doing well! It\u2019s always great to see you both in large group and small group and I hope you continue to show up throughout your college years. You\u2019re really sweet, positive, and kind and AACF as a community is really lucky to have you. You just have a warm aura and it\u2019s always fun to talk with you. I hope you have a great and memorable college experience and I hope to see you when I visit in the future! Stay healthy, stay happy, and stay you!"]
+    }, {
+        "name": "img",
+        "message": "Math Club.jpg"
     }],
     "sh2": [{
         "name": "Josh",
         "message": ["Sarah", "Hi, it\u2019s your \u201clittle brother\u201d Josh. Your vulnerability and openness in the times that we\u2019ve had discussions together (i.e. that time we were chilling in Steph\u2019s apartment until 2 or something) really encourages me because of just how powerful one\u2019s testimony and story can be. I can see that you\u2019re really rooted in God and I pray that you would continue to be a light to your two bros and to everyone else that\u2019s around you, whether AACF, AAIV or otherwise."]
+    }, {
+        "name": "img",
+        "message": "True Fans.jpg"
     }],
     "ll": [{
         "name": "Josh",
@@ -287,6 +347,9 @@
     }, {
         "name": "The Child Prodigy",
         "message": ["Lucy,", "Thanks for making my first year here at UW so enjoyable. As a 16 year old transitioning into college, it was hard to fit in, but you reached out to me when no one else did. I appreciate you always hanging out with me and helping me get used to life here in America!"]
+    }, {
+        "name": "img",
+        "message": "Bubble Tea Friends.jpg"
     }],
     "ac": [{
         "name": "Daniel",
@@ -300,12 +363,21 @@
     }, {
         "name": "Jed",
         "message": ["Hi!", "You should know that dining and dashing is not acceptable. Please know your limits, and stick to playing League.", "Speaking of which, good luck on the ranked climb. I have long since given up on ranked so respect for you. If you give up, no shame! You're probably only doing this because you're bored anyway. If you are, let's play some other more relaxing and non flame-inducing game together, like Minecraft. ", "GoOdbYe fElLoW gAMer."]
+    }, {
+        "name": "img",
+        "message": "Tom.jpg"
     }],
     "bc": [{
         "name": "Josh",
         "message": ["Briawna,", "It\u2019s certainly been a while since we\u2019ve talked, but from the times we\u2019ve participated in the discussions together, I\u2019m always inspired by your biblical and Scriptural knowledge. Looks like all that Awana in elementary stuck with at least one of us haha. I\u2019m sure you add to discussions in small groups, and I hope you can continue to be a resource for not only your freshwomen community but for everyone else!"]
+    }, {
+        "name": "img",
+        "message": "Safeway.jpg"
     }],
-    "bc2": [],
+    "bc2": [{
+        "name": "img",
+        "message": "Trees.png"
+    }],
     "yy": [{
         "name": "Bill Wang",
         "message": ["Hi Yu Ann", "I hope life has been treating you well this quarter. I think of you as a very brave person and I think you will make a large impact at AACF for years to come. You are full of life and joy and it is inspiring for me to see that in freshman person like you. Please enjoy your time in college and in fellowship. Keep doing you and you will achieve the world. "]
@@ -321,5 +393,11 @@
     }, {
         "name": "George",
         "message": ["Hi Yoon!", "Wow what a nickname. Anyways, thanks for being the coolest little sister (TMI: my mom always wanted my brother and I to have a little sister but we adamantly refused). It\u2019s simply been amazing to see you grow and become a part of the AACF family. Whenever I hold worship practice, you\u2019re one of the few people that I expect to be there, and that really motivates me to keep on coordinating week after week. Aside from worship, it\u2019s been a lot of fun hanging out with you, whether it\u2019s going on adventures or going to class. Although I probably won\u2019t be here next year, I look forward to seeing how things turn out for you. You\u2019ve got a lot of resilience, positivity, and experience within you, and I think that you will accomplish a great deal of amazing things in the next few years. Soooo whenever I get around to building my own house, I\u2019ll give you a call. Anyway, don\u2019t be afraid to reach out whenever you need anything, although I usually google about 90% of the questions you ask me (hey google is smarter than me so it makes sense). "]
+    }, {
+        "name": "img",
+        "message": "Your Fellow Actor.jpg"
+    }, {
+        "name": "img",
+        "message": "CM.jpg"
     }]
 }
