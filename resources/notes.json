@@ -65,6 +65,9 @@
     }, {
         "name": "img",
         "message": "KPOP King.jpg"
+    }, {
+        "name": "Not KevK",
+        "message": ["Hey Susan,", "Zoom for Four was fun. Hang in there, we\u2019re almost done with spring quarter. Keep staying healthy\u2026 at the very least, until Senior Send-Off ;) ", "[To be continued\u2026 when SSO rolls around]"]
     }],
     "mt": [{
         "name": "Josh",
@@ -158,6 +161,9 @@
     "df": [{
         "name": "Jun",
         "message": ["Hey Danielle! Hope you're doing well in this quarantine season. I just want you to know that we appreciate you coming to AACF! Probably the most memorable thing was when we were in Oasis playing Egyptian something card game. I apologize for being so loud and aggressive, but I hope it wasn\u2019t a bad time haha. Stay healthy! Stay away from COVID cuz I heard it\u2019s pretty bad if you catch it. Hope to see you more often next year when school (hopefully?) is in-person again."]
+    }, {
+        "name": "Ted",
+        "message": ["Hey Danielle,", "It was nice playing Jenga with you at the Table4Four afterparty last quarter. I hope that you are enjoying your time in AACF and that you feel appreciated tonight. Hope you stay safe during this season of distancing and have fun tonight. God Bless!"]
     }, {
         "name": "img",
         "message": "Dreamworks.jpg"
@@ -288,6 +294,9 @@
     }, {
         "name": "img",
         "message": "Your Students.jpg"
+    }, {
+        "name": "KevK",
+        "message": ["Hey Jacinda! ", "It\u2019s almost summer! (Yay?!?!) It was pretty awesome seeing you at the STLP office back in Winter Quarter\u2014it was a while since I\u2019d seen you around AACF Large Group and it was really great to hear from you, even if it was just a handful of minutes of catching up! Even though this school year\u2019s been derailed for many of us, I hope you were still able to learn from, experience, and just enjoy the things you\u2019ve done at UW\u2014from helping folks with the STLP, to leading an AACF small group, and much much more. It is without a doubt that you\u2019ll be able to continue to be a light in others\u2019 lives with your kindness, care, and positivity! "]
     }],
     "al": [{
         "name": "Daniel",
@@ -377,6 +386,9 @@
     "bc2": [{
         "name": "img",
         "message": "Trees.png"
+    }, {
+        "name": "KevK",
+        "message": ["Hey Bethany,", "You made it to SAD/BAD! It was really cool meeting you during Zoom for Four and also having you at AACF Retreat. I know you\u2019re not quite in college yet, but that just means you\u2019ve got so many more years ahead of us older peeps to enjoy the younger, more care-free years of life. Not to mention, more years ahead to leave a lasting impact on others! Stay curious, be full of wonder, and buckle up for the upcoming years ahead. I guarantee you it\u2019ll be one heck of a ride, but also one that\u2019ll hopefully challenge you and grow you in so many ways. I\u2019m excited to hear about what you\u2019ll end up doing in the future, regardless of where you go and what you pursue. You\u2019re always welcome to join us and we at AACF shall patiently await for your arrival ;)"]
     }],
     "yy": [{
         "name": "Bill Wang",
@@ -399,5 +411,8 @@
     }, {
         "name": "img",
         "message": "CM.jpg"
+    }, {
+        "name": "KevK",
+        "message": ["Hey Yu-Ann!", "It\u2019s been a blessing having you in AACF and it\u2019s awesome seeing you join the AACF Fam and to see you with the worship team. Can I say this, or is it too weird\u2026 I\u2019ll just say it\u2014you go girl! You\u2019ve got a lot of years ahead and I\u2019m excited to see how God will work through your life to be a light to others and grow you to be even more awesom-er by the time you emerge from college. We\u2019re lucky to have you in AACF! "]
     }]
 }
